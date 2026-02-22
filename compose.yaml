@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    container_name: decker_backup
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - "8002:8002"
+    command: php artisan serve --host=0.0.0.0 --port=8002
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.11
+    container_name: decker_backup_db
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: decker
+      MARIADB_USER: sail
+      MARIADB_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

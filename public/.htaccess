@@ -1,0 +1,39 @@
+
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # 1. WWW ve HTTPS ZORUNLULUĞU (Buraya Ekledik)
+    # Eğer siteye WWW olmadan girilirse VEYA HTTPS olmadan girilirse yönlendir.
+    RewriteCond %{HTTP_HOST} !^www\. [NC,OR]
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://www.deck-er.us/$1 [L,R=301]
+
+    # Varsayılan dosya index.php
+    DirectoryIndex index.php
+
+    # Yetkilendirme Başlıklarını İşle
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # URL sonundaki eğik çizgileri yönet
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Laravel'in Standart Yönlendirmesi
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+php_value upload_max_filesize 128M
+php_value post_max_size 128M
+php_value memory_limit 512M
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php82” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

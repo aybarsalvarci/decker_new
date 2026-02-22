@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /vendor/
+Disallow: /base/
+Disallow: /cgi-bin/
+
+Disallow: /admin/
+Disallow: /login
+
+Sitemap: https://www.deck-er.us/sitemap.xml
