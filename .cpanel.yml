@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/fixerr/deck-er.us
+    - export DEPLOYPATH=/home/fixerr/public_html/deck-er.us
     - /bin/cp -R * $DEPLOYPATH
