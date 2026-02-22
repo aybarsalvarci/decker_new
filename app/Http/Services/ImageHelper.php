@@ -26,5 +26,6 @@ class ImageHelper
         Storage::disk('public')->put($fullpath, $image);
 
         return $fullpath;
+
     }
 }
