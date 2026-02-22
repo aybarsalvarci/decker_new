@@ -38,7 +38,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, &$data) {
 
             if ($request->hasFile('image')) {
-                $data['image'] =ImageService::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
+                $data['image'] =ImageService::upload($request->file('image'), 'images/categories', 400, 'webp');
             }
 
             $data['slug_en'] = $request->slug_en
@@ -94,7 +94,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, $category, $data) {
 
             if ($request->hasFile('image')) {
-                $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
+                $data['image'] = ImageService::upload($request->file('image'), 'images/categories', 400, 'webp');
 
                 if ($category->image && Storage::disk('public')->exists($category->image)) {
                     Storage::disk('public')->delete($category->image);
