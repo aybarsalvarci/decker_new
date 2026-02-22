@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateRequest;
 use App\Http\Requests\Category\UpdateRequest;
+use App\Http\Services\ImageHelper;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -37,9 +38,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, &$data) {
 
             if ($request->hasFile('image')) {
-                $imageName = Str::uuid() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->storeAs('images', $imageName, 'public');
-                $data['image'] = 'images/' . $imageName;
+                $data['image'] =ImageHelper::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
             }
 
             $data['slug_en'] = $request->slug_en
@@ -95,9 +94,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, $category, $data) {
 
             if ($request->hasFile('image')) {
-                $imageName = Str::uuid() . '.' . $request->image->getClientOriginalExtension();
-                $request->image->storeAs('images/', $imageName, 'public');
-                $data['image'] = 'images/' . $imageName;
+                $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
 
                 if ($category->image && Storage::disk('public')->exists($category->image)) {
                     Storage::disk('public')->delete($category->image);

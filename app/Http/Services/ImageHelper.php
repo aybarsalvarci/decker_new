@@ -8,7 +8,7 @@ use Intervention\Image\Laravel\Facades\Image;
 class ImageHelper
 {
 
-    public static function uploadWithoutEncoding(UploadedFile $image,string $path, ?int $width = null, ?string $format = null)
+    public static function uploadWithEncoding(UploadedFile $image,string $path, ?int $width = null, ?string $format = null)
     {
         $format = $format ?? $image->extension();
         $image = Image::read($image);
