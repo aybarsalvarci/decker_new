@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalCertificates\CreateRequest;
 use App\Http\Requests\TechnicalCertificates\UpdateRequest;
+use App\Http\Services\ImageHelper;
 use App\Models\TechnicalCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -34,15 +35,11 @@ class TechnicalCertificateController extends Controller
      */
     public function store(CreateRequest $request)
     {
-        // 1. Validasyonu burada eliyoruz. Eğer CreateRequest içinde 'file' => 'mimes:pdf' varsa
-        // o 690KB'lık dosya zaten buraya hiç gelemez.
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = Str::uuid() . "." . $image->getClientOriginalExtension();
-            $image->storeAs('images/certificates', $imageName, 'public');
-            $data['image'] = "images/certificates/" . $imageName;
+
+            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {
@@ -90,9 +87,7 @@ class TechnicalCertificateController extends Controller
                 Storage::disk('public')->delete($certificate->image);
             }
 
-            $fileName = Str::uuid() . "." . $request->image->extension();
-            $request->image->storeAs('images/certificates', $fileName, 'public');
-            $data['image'] = "images/certificates/" . $fileName;
+            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {
