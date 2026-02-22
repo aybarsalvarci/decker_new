@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\About\UpdateAboutRequest;
+use App\Http\Services\ImageHelper;
 use App\Models\About;
 use App\Models\AboutFactory;
 use Illuminate\Http\Request;
@@ -38,10 +39,7 @@ class AboutController extends Controller
                 Storage::disk('public')->delete($about->story_image);
             }
 
-            $fileName = Str::uuid() . '.' . $request->file('story_image')->extension();
-            $request->file('story_image')->storeAs('about', $fileName, 'public');
-
-            $data['story_image'] = 'about/' . $fileName;
+            $data['story_image'] = ImageHelper::uploadWithEncoding(request()->file('story_image'), 'images/about', 800, 'webp');
         }
 
         $about->update($data);
