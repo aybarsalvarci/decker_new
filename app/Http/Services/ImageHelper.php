@@ -28,4 +28,13 @@ class ImageHelper
         return $fullpath;
 
     }
+
+    public static function uploadWithoutEncoding(UploadedFile $image,string $path, ?int $width = null)
+    {
+        $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
+        $path = trim($path, '/');
+
+        Storage::disk('public')->putFileAS($path, $image, $fileName);
+        return $path . "/" . $fileName;
+    }
 }
