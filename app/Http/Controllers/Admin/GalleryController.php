@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\ImageHelper;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,11 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->uploadImage($request->images);
+        foreach($request->images as $file)
+        {
+            $path = ImageHelper::uploadWithEncoding($file, 'images/about-factory', 800, 'webp');
+            Gallery::create(['path' => $path]);
+        }
 
         return redirect()->route('admin.resources.gallery.index');
     }
@@ -77,14 +82,4 @@ class GalleryController extends Controller
         return redirect()->back()->withSuccess("The gallery item has been deleted");
     }
 
-    private function uploadImage($files)
-    {
-        foreach($files as $file)
-        {
-            $fileName = Str::uuid().'.'.$file->extension();
-            $file->storeAs('images/gallery', $fileName, 'public');
-            $path = 'images/gallery/' . $fileName;
-            Gallery::create(['path' => $path]);
-        }
-    }
 }
