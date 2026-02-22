@@ -8,6 +8,28 @@ use Intervention\Image\Laravel\Facades\Image;
 class ImageService
 {
 
+    public static function upload(UploadedFile $image,string $path, ?int $width = null, ?string $format = null)
+    {
+        $format = $format ?? $image->extension();
+        $image = Image::read($image);
+
+        if ($width)
+        {
+            $image = $image->scaleDown($width);
+        }
+
+        $image = $image->sharpen(12)
+            ->encodeByExtension($format, quality:80);
+
+        $filename = Str::uuid() . '.' . $format;
+        $fullpath = trim($path, '/') . '/' . $filename;
+
+        Storage::disk('public')->put($fullpath, $image);
+
+        return $fullpath;
+
+    }
+
     public static function uploadWithEncoding(UploadedFile $image,string $path, ?int $width = null, ?string $format = null)
     {
         $format = $format ?? $image->extension();
@@ -18,7 +40,8 @@ class ImageService
             $image = $image->scaleDown($width);
         }
 
-        $image = $image->encodeByExtension($format, quality:80);
+        $image = $image->sharpen(12)
+            ->encodeByExtension($format, quality:80);
 
         $filename = Str::uuid() . '.' . $format;
         $fullpath = trim($path, '/') . '/' . $filename;
@@ -31,10 +54,21 @@ class ImageService
 
     public static function uploadWithoutEncoding(UploadedFile $image,string $path, ?int $width = null)
     {
-        $fileName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-        $path = trim($path, '/');
+        $format = $image->getClientOriginalExtension();
+        $image = Image::read($image);
 
-        Storage::disk('public')->putFileAS($path, $image, $fileName);
+        if($width)
+        {
+            $image = $image->scaleDown($width);
+        }
+
+        $image = $image->sharpen(12)
+            ->encodeByExtension($format, quality:80);
+
+        $fileName = Str::uuid() . '.' . $format;
+        $fullpath = trim($path, '/') . '/' . $fileName;
+
+        Storage::disk('public')->put($fullpath, $image);
         return $path . "/" . $fileName;
     }
 }

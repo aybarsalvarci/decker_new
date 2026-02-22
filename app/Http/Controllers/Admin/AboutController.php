@@ -39,7 +39,7 @@ class AboutController extends Controller
                 Storage::disk('public')->delete($about->story_image);
             }
 
-            $data['story_image'] = ImageService::uploadWithEncoding(request()->file('story_image'), 'images/about', 800, 'webp');
+            $data['story_image'] = ImageService::upload(request()->file('story_image'), 'images/about', 800, 'webp');
         }
 
         $about->update($data);
