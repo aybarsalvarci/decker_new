@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateRequest;
 use App\Http\Requests\Product\UpdateRequest;
+use App\Http\Services\ImageHelper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductColor;
@@ -58,8 +59,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('products', $imageName, 'public');
+                $path = ImageHelper::uploadWithEncoding($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,
@@ -84,10 +84,9 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        $product = Product::with('category', 'colors')->findOrFail($id);
+        $product = Product::with('category', 'colors', 'images')->findOrFail($id);
         $categories = Category::all();
         $colors = ProductColor::all();
-
         return view('admin.product.edit', compact('product', 'categories', 'colors'));
     }
 
@@ -98,7 +97,6 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $data = $request->validated();
-
         $data['slug_en'] = $data['slug_en'] ? Str::slug($data['slug_en']) : Str::slug($data['name_en']);
         $data['slug_esp'] = $data['slug_esp'] ? Str::slug($data['slug_esp']) : Str::slug($data['name_esp']);
 
@@ -107,9 +105,8 @@ class ProductController extends Controller
             $data['actual_size'] = null;
             $data['weight'] = null;
         }
-
-        if ($request->has('delete_images')) {
-            $imagesToDelete = ProductImages::whereIn('id', $request->delete_images)->get();
+        if ($request->has('deleted_images')) {
+            $imagesToDelete = ProductImages::whereIn('id', array_values($request->deleted_images))->get();
             foreach ($imagesToDelete as $img) {
                 if (Storage::disk('public')->exists($img->image)) {
                     Storage::disk('public')->delete($img->image);
@@ -117,11 +114,9 @@ class ProductController extends Controller
                 $img->delete();
             }
         }
-
-        if ($request->hasFile('new_images')) {
+        if ($request->has('new_images')) {
             foreach ($request->file('new_images') as $image) {
-                $imageName = Str::uuid() . '.' . $image->getClientOriginalExtension();
-                $path = $image->storeAs('products', $imageName, 'public');
+                $path = ImageHelper::uploadWithEncoding($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,

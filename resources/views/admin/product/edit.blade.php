@@ -152,11 +152,11 @@
             margin-left: 15px;
         }
 
-        /* Gallery Preview */
+        /* Gallery Preview Update */
         .gallery-preview-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
             margin-top: 20px;
         }
 
@@ -166,12 +166,52 @@
             border-radius: 12px;
             overflow: hidden;
             border: 1px solid #e5e7eb;
+            background: #fff;
         }
 
         .gallery-item img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        .gallery-item .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            width: 26px;
+            height: 26px;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+
+        .gallery-item .delete-btn:hover {
+            transform: scale(1.1);
+            background: #ef4444;
+        }
+
+        .main-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--primary-color);
+            color: white;
+            font-size: 9px;
+            text-align: center;
+            padding: 3px 0;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .upload-area {
@@ -181,6 +221,12 @@
             padding: 30px;
             text-align: center;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary-color);
+            background: #f1f5f9;
         }
 
         .btn-primary-custom {
@@ -191,6 +237,11 @@
             font-weight: 600;
             width: 100%;
             border: none;
+            transition: background 0.2s;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-hover);
         }
     </style>
 @endpush
@@ -260,21 +311,30 @@
                     </div>
 
                     <div class="modern-card">
-                        <div class="card-header"><h3 class="card-title"><i class="fas fa-images mr-2 text-primary"></i> Media Gallery</h3></div>
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-images mr-2 text-primary"></i> Media Gallery</h3>
+                        </div>
                         <div class="card-body">
+                            <div id="deleted-images-container"></div>
+
                             <div class="upload-area" onclick="document.getElementById('images').click()">
                                 <i class="fas fa-cloud-upload-alt fa-2x mb-2 text-primary"></i>
-                                <h5>Upload New Images</h5>
-                                <small class="text-muted">Leaving this empty will keep existing images.</small>
-                                <input type="file" name="images[]" id="images" multiple style="display:none;" accept="image/*" onchange="previewUnifiedImages(this)">
+                                <h5>Add New Images</h5>
+                                <small class="text-muted">You can select multiple files to upload.</small>
+                                <input type="file" name="new_images[]" id="images" multiple style="display:none;" accept="image/*" onchange="handleFileSelect(this)">
                             </div>
 
                             <div class="gallery-preview-container" id="unified-preview">
                                 @if($product->images)
-                                    @foreach($product->images as $index => $img)
-                                        <div class="gallery-item">
-                                            @if($index == 0)<div class="main-badge">CURRENT COVER</div>@endif
-                                            <img src="{{ asset('storage/' . $img->path) }}">
+                                    @foreach($product->images as $img)
+                                        <div class="gallery-item" id="existing-img-{{ $img->id }}">
+                                            <button type="button" class="delete-btn" onclick="removeExistingImage({{ $img->id }})">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            <img src="{{ asset('storage/' . $img->image) }}">
+                                            @if($loop->first)
+                                                <div class="main-badge">CURRENT COVER</div>
+                                            @endif
                                         </div>
                                     @endforeach
                                 @endif
@@ -352,7 +412,7 @@
     <script>
         $(document).ready(function() {
             $('.select2').select2({ width: '100%' });
-            toggleTechInputs(); // Sayfa açılışında kontrol et
+            toggleTechInputs();
         });
 
         // Slug Generator
@@ -384,19 +444,42 @@
         }
         isSizedCheckbox.addEventListener('change', toggleTechInputs);
 
-        // Preview Gallery (Yeni yüklenenleri gösterir)
-        function previewUnifiedImages(input) {
+        // --- MEDIA GALLERY UPDATE LOGIC ---
+
+        // 1. Mevcut resmi silinmek üzere işaretle
+        function removeExistingImage(imageId) {
+            if (confirm('Are you sure you want to remove this image? This cannot be undone.')) {
+                // Görseli arayüzden kaldır
+                const element = document.getElementById(`existing-img-${imageId}`);
+                element.style.opacity = '0.3';
+                element.style.pointerEvents = 'none';
+                element.querySelector('.delete-btn').remove(); // Tekrar tıklanmasın
+
+                // Silinecek ID'yi gizli input olarak forma ekle
+                const container = document.getElementById('deleted-images-container');
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = 'deleted_images[]';
+                input.value = imageId;
+                container.appendChild(input);
+            }
+        }
+
+        // 2. Yeni resimleri seç ve önizleme yap (mevcutları temizlemeden ekler)
+        function handleFileSelect(input) {
             const container = document.getElementById('unified-preview');
-            // Yeni resim seçildiğinde mevcut önizlemeleri temizlemek istersen container.innerHTML = '' kullanabilirsin.
+
             if (input.files) {
-                container.innerHTML = ''; // Yeni seçilenleri göstermek için temizle
-                Array.from(input.files).forEach((file, index) => {
+                Array.from(input.files).forEach((file) => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const div = document.createElement('div');
                         div.className = 'gallery-item';
-                        if (index === 0) div.innerHTML = '<div class="main-badge">NEW COVER</div>';
-                        div.innerHTML += `<img src="${e.target.result}">`;
+                        div.style.border = '2px solid #4f46e5'; // Yeni olduğunu belli etmek için
+                        div.innerHTML = `
+                            <div class="main-badge" style="background:#10b981">NEW</div>
+                            <img src="${e.target.result}">
+                        `;
                         container.appendChild(div);
                     }
                     reader.readAsDataURL(file);

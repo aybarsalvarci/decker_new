@@ -33,8 +33,8 @@ class UpdateRequest extends FormRequest
             'actual_size' => 'required_if:isSized,1|nullable|string|max:255',
             'weight'      => 'nullable|string|max:255',
 
-            'delete_images'   => 'nullable|array',
-            'delete_images.*' => 'integer|exists:product_images,id',
+            'deleted_images'   => 'nullable|array',
+            'deleted_images.*' => 'integer|exists:product_images,id',
             'new_images'      => 'nullable|array|max:10',
             'new_images.*'    => 'image|mimes:jpeg,jpg,png,webp|max:2048',
         ];
