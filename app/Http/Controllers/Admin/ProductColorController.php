@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProductColor\CreateRequest;
 use App\Http\Requests\ProductColor\UpdateRequest;
+use App\Http\Services\ImageHelper;
 use App\Models\ProductColor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -37,9 +38,7 @@ class ProductColorController extends Controller
         $data = $request->validated();
 
         if($request->hasFile('image')){
-            $imageName = Str::uuid().'.'.$request->image->getClientOriginalExtension();
-            $request->image->storeAs('images', $imageName, 'public');
-            $data['image'] = 'images/' . $imageName;
+            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/product-colors', 200, 'webp');
         }
 
         ProductColor::create($data);
@@ -77,9 +76,7 @@ class ProductColorController extends Controller
                 Storage::disk('public')->delete($color->image);
             }
 
-            $imageName = Str::uuid().'.'.$request->image->getClientOriginalExtension();
-            $request->image->storeAs('images', $imageName, 'public');
-            $data['image'] = 'images/' . $imageName;
+            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/product-colors', 200, 'webp');
         }
 
         $color->update($data);
