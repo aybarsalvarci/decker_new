@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -35,7 +35,7 @@ class GalleryController extends Controller
     {
         foreach($request->images as $file)
         {
-            $path = ImageHelper::uploadWithEncoding($file, 'images/about-factory', 800, 'webp');
+            $path = ImageService::uploadWithEncoding($file, 'images/about-factory', 800, 'webp');
             Gallery::create(['path' => $path]);
         }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Report\CreateRequest;
 use App\Http\Requests\Report\UpdateRequest;
+use App\Http\Services\ImageService;
 use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -37,9 +38,7 @@ class ReportController extends Controller
         $data = $request->validated();
 
         if($request->hasFile('image')){
-            $imageName = Str::uuid().'.'.$request->image->extension();
-            $request->image->storeAs('images', $imageName, 'public');
-            $data['image'] = 'images/' . $imageName;
+            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/reports', 800, 'webp');
         }
 
         //slug
@@ -50,11 +49,10 @@ class ReportController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $newName = Str::uuid().'.'.$file->getClientOriginalExtension();
-                $file->storeAs('reports/slider', $newName, 'public');
+                $path = ImageService::uploadWithEncoding($request->file('image'), 'images/reports', 800, 'webp');
 
                 $report->images()->create([
-                    'path' => 'reports/slider/' . $newName
+                    'path' => $path
                 ]);
             }
         }
@@ -155,10 +153,10 @@ class ReportController extends Controller
     public function uploadImage(Request $request)
     {
         if($request->hasFile('image')) {
-            $fileName = Str::uuid() . '.' . $request->file('image')->getClientOriginalExtension();
-            $request->file('image')->storeAs('images/reports/content/', $fileName, 'public');
+            $image = ImageService::uploadWithEncoding($request->file('image'), 'images/reports/content', 800, 'webp');
+
             return response()->json([
-                "url" => asset('storage/images/reports/content/' . $fileName)
+                "url" => asset('storage/' . $image)
             ]);
         }
     }

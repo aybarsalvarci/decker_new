@@ -5,7 +5,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Laravel\Facades\Image;
-class ImageHelper
+class ImageService
 {
 
     public static function uploadWithEncoding(UploadedFile $image,string $path, ?int $width = null, ?string $format = null)

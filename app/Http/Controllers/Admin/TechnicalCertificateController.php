@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TechnicalCertificates\CreateRequest;
 use App\Http\Requests\TechnicalCertificates\UpdateRequest;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\TechnicalCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -39,7 +39,7 @@ class TechnicalCertificateController extends Controller
 
         if ($request->hasFile('image')) {
 
-            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
+            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {
@@ -87,7 +87,7 @@ class TechnicalCertificateController extends Controller
                 Storage::disk('public')->delete($certificate->image);
             }
 
-            $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
+            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {

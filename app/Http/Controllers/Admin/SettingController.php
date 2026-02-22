@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\UpdateRequest;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -31,7 +31,7 @@ class SettingController extends Controller
                 Storage::disk("public")->delete($settings->header_logo);
             }
 
-            $data['header_logo'] = ImageHelper::uploadWithEncoding($request->file('header_logo'), 'images/settings', 400, "webp");
+            $data['header_logo'] = ImageService::uploadWithEncoding($request->file('header_logo'), 'images/settings', 400, "webp");
         }
 
         if ($request->hasFile('footer_logo')) {
@@ -39,7 +39,7 @@ class SettingController extends Controller
                 Storage::disk("public")->delete($settings->footer_logo);
             }
 
-            $data['footer_logo'] = ImageHelper::uploadWithEncoding($request->file('footer_logo'), 'images/settings', 400, "webp");
+            $data['footer_logo'] = ImageService::uploadWithEncoding($request->file('footer_logo'), 'images/settings', 400, "webp");
         }
 
         if ($request->hasFile('favicon')) {
@@ -50,7 +50,7 @@ class SettingController extends Controller
             $fileName = Str::uuid() . '.' . $request->file('favicon')->getClientOriginalExtension();
             $request->file('favicon')->storeAs('settings', $fileName, 'public');
 
-            $data['favicon'] = ImageHelper::uploadWithoutEncoding($request->file('favicon'), 'images/settings', 100);
+            $data['favicon'] = ImageService::uploadWithoutEncoding($request->file('favicon'), 'images/settings', 100);
         }
 
         $settings->update($data);

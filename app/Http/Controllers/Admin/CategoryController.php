@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\CreateRequest;
 use App\Http\Requests\Category\UpdateRequest;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -38,7 +38,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, &$data) {
 
             if ($request->hasFile('image')) {
-                $data['image'] =ImageHelper::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
+                $data['image'] =ImageService::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
             }
 
             $data['slug_en'] = $request->slug_en
@@ -94,7 +94,7 @@ class CategoryController extends Controller
         DB::transaction(function () use ($request, $category, $data) {
 
             if ($request->hasFile('image')) {
-                $data['image'] = ImageHelper::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
+                $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/categories', 400, 'webp');
 
                 if ($category->image && Storage::disk('public')->exists($category->image)) {
                     Storage::disk('public')->delete($category->image);
@@ -143,5 +143,22 @@ class CategoryController extends Controller
     {
         $category = Category::with('icons')->findOrFail($id);
         return view('admin.category.edit', compact('category'));
+    }
+
+    public function destroy(int $id)
+    {
+        $category = Category::with('icons')->findOrFail($id);
+
+        $category->icons()->delete();
+
+        if(Storage::disk('public')->exists($category->image))
+        {
+            Storage::disk('public')->delete($category->image);
+        }
+
+        $category->delete();
+
+        return redirect()->route('admin.category.index')
+            ->with('success', 'Category deleted successfully.');
     }
 }

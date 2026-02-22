@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\SampleBox\CreateRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SampleBox\UpdateRequest;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\FreeSampleBox;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -38,7 +38,7 @@ class FreeSampleBoxController extends Controller
         $data = $request->validated();
 
         if (request()->hasFile('image')) {
-            $data['image'] = ImageHelper::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
+            $data['image'] = ImageService::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
         }
 
         FreeSampleBox::create($data);
@@ -76,7 +76,7 @@ class FreeSampleBoxController extends Controller
                 Storage::disk('public')->delete($box->image);
             }
 
-            $data['image'] = ImageHelper::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
+            $data['image'] = ImageService::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
         }
 
         $box->update($data);

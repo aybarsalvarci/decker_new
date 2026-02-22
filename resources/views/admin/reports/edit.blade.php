@@ -207,7 +207,11 @@
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview']]
-                ]
+                ],
+                callbacks: {
+                    onImageUpload: function (files) { uploadImage(files[0], $(this)); },
+                    onMediaDelete: function (target) { deleteFile(target[0].src); }
+                }
             });
 
             // Tekli Resim Önizleme (Kapak)
@@ -253,6 +257,28 @@
                 const trMap = {'ç':'c','ğ':'g','ı':'i','ö':'o','ş':'s','ü':'u','Ç':'C','Ğ':'G','İ':'I','Ö':'O','Ş':'S','Ü':'U'};
                 for (let key in trMap) { text = text.replace(new RegExp(key, 'g'), trMap[key]); }
                 return text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '').replace(/\-\-+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+            }
+
+            // Summernote Image Upload
+            function uploadImage(file, editor) {
+                let data = new FormData();
+                data.append("image", file);
+                data.append("_token", CSRF_TOKEN);
+                $.ajax({
+                    url: "{{ route('admin.report.upload-image') }}",
+                    cache: false, contentType: false, processData: false,
+                    data: data, type: "POST",
+                    success: function (response) { editor.summernote('insertImage', response.url); },
+                    error: function () { alert("Image upload failed!"); }
+                });
+            }
+
+            function deleteFile(src) {
+                $.ajax({
+                    url: "{{ route('admin.report.delete-image') }}",
+                    type: "POST",
+                    data: { src: src, _token: CSRF_TOKEN }
+                });
             }
 
             $('#title_en').on('input', function() { $('#slug_en').val(convertToSlug($(this).val())); });

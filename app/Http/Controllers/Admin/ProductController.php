@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\CreateRequest;
 use App\Http\Requests\Product\UpdateRequest;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductColor;
@@ -59,7 +59,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = ImageHelper::uploadWithEncoding($image, 'images/products', 800, 'webp');
+                $path = ImageService::uploadWithEncoding($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,
@@ -116,7 +116,7 @@ class ProductController extends Controller
         }
         if ($request->has('new_images')) {
             foreach ($request->file('new_images') as $image) {
-                $path = ImageHelper::uploadWithEncoding($image, 'images/products', 800, 'webp');
+                $path = ImageService::uploadWithEncoding($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,

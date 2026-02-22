@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Services\ImageHelper;
+use App\Http\Services\ImageService;
 use App\Models\AboutFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,11 +23,11 @@ class AboutFactoryController extends Controller
         $data = $request->except(['image1', 'image2', '_token']);
 
         if ($request->hasFile('image1')) {
-            $data['image1'] = ImageHelper::uploadWithEncoding($request->file('image1'), 'images/about-factory', 800, 'webp');
+            $data['image1'] = ImageService::uploadWithEncoding($request->file('image1'), 'images/about-factory', 800, 'webp');
         }
 
         if ($request->hasFile('image2')) {
-            $data['image2'] = ImageHelper::uploadWithEncoding($request->file('image2'), 'images/about-factory', 800, 'webp');
+            $data['image2'] = ImageService::uploadWithEncoding($request->file('image2'), 'images/about-factory', 800, 'webp');
         }
 
         AboutFactory::create($data);
@@ -50,14 +50,14 @@ class AboutFactoryController extends Controller
             if ($factory->image1 && Storage::disk('public')->exists($factory->image1)) {
                 Storage::disk('public')->delete($factory->image1);
             }
-            $data['image1'] = ImageHelper::uploadWithEncoding($request->file('image1'), 'images/about-factory', 800, 'webp');
+            $data['image1'] = ImageService::uploadWithEncoding($request->file('image1'), 'images/about-factory', 800, 'webp');
         }
 
         if ($request->hasFile('image2')) {
             if ($factory->image2 && Storage::disk('public')->exists($factory->image2)) {
                 Storage::disk('public')->delete($factory->image2);
             }
-            $data['image2'] = ImageHelper::uploadWithEncoding($request->file('image2'), 'images/about-factory', 800, 'webp');
+            $data['image2'] = ImageService::uploadWithEncoding($request->file('image2'), 'images/about-factory', 800, 'webp');
         }
 
         $factory->update($data);
