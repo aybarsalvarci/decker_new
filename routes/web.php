@@ -85,6 +85,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
     Route::resource('faqs', FaqController::class)->except('show');
 
     Route::prefix('resources')->name('resources.')->group(function () {
+        Route::post('upload-image', [ResourceController::class, 'uploadImage'])->name('upload-image');
+        Route::post('delete-image', [ResourceController::class, 'deleteImage'])->name('delete-image');
+
         Route::get('online-catalog', [ResourceController::class, 'catalog'])->name('catalog');
         Route::put('online-catalog', [ResourceController::class, 'updateCatalog'])->name('catalog.update');
 

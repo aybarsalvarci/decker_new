@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Resource\UpdateCareAndMaintenanceRequest;
 use App\Http\Requests\Resources\UpdateCatalogRequest;
 use App\Http\Requests\Resources\UpdateWarrantiesRequest;
+use App\Http\Services\ImageService;
 use App\Models\InstallationGuide;
 use App\Models\StaticPage;
 use Illuminate\Http\Request;
@@ -76,5 +77,27 @@ class ResourceController extends Controller
         $page->update($request->validated());
 
         return redirect()->back()->withSuccess("Care and maintenance updated successfully");
+    }
+
+    public function uploadImage(Request $request)
+    {
+        if($request->hasFile('image')) {
+            $image = ImageService::uploadWithEncoding($request->file('image'), 'images/resources', 800, 'webp');
+
+            return response()->json([
+                "url" => asset('storage/' . $image)
+            ]);
+        }
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $src = $request->src;
+        $path = str_replace(asset('storage/'), '', $src);
+
+        if (Storage::disk('public')->exists($path)) {
+            Storage::disk('public')->delete($path);
+            return response()->json(['success' => true]);
+        }
     }
 }
