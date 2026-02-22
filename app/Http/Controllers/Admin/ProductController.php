@@ -59,7 +59,7 @@ class ProductController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
-                $path = ImageService::uploadWithEncoding($image, 'images/products', 800, 'webp');
+                $path = ImageService::upload($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,
@@ -116,7 +116,7 @@ class ProductController extends Controller
         }
         if ($request->has('new_images')) {
             foreach ($request->file('new_images') as $image) {
-                $path = ImageService::uploadWithEncoding($image, 'images/products', 800, 'webp');
+                $path = ImageService::upload($image, 'images/products', 800, 'webp');
 
                 ProductImages::create([
                     'product_id' => $product->id,

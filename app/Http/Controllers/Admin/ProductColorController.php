@@ -38,7 +38,7 @@ class ProductColorController extends Controller
         $data = $request->validated();
 
         if($request->hasFile('image')){
-            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/product-colors', 200, 'webp');
+            $data['image'] = ImageService::upload($request->file('image'), 'images/product-colors', 200, 'webp');
         }
 
         ProductColor::create($data);
@@ -76,7 +76,7 @@ class ProductColorController extends Controller
                 Storage::disk('public')->delete($color->image);
             }
 
-            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/product-colors', 200, 'webp');
+            $data['image'] = ImageService::upload($request->file('image'), 'images/product-colors', 200, 'webp');
         }
 
         $color->update($data);

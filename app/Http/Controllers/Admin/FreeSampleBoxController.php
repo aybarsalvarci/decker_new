@@ -38,7 +38,7 @@ class FreeSampleBoxController extends Controller
         $data = $request->validated();
 
         if (request()->hasFile('image')) {
-            $data['image'] = ImageService::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
+            $data['image'] = ImageService::upload(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
         }
 
         FreeSampleBox::create($data);
@@ -76,7 +76,7 @@ class FreeSampleBoxController extends Controller
                 Storage::disk('public')->delete($box->image);
             }
 
-            $data['image'] = ImageService::uploadWithEncoding(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
+            $data['image'] = ImageService::upload(request()->file('image'), 'images/freeSampleBox', 800, 'webp');
         }
 
         $box->update($data);

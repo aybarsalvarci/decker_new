@@ -35,7 +35,7 @@ class GalleryController extends Controller
     {
         foreach($request->images as $file)
         {
-            $path = ImageService::uploadWithEncoding($file, 'images/about-factory', 800, 'webp');
+            $path = ImageService::upload($file, 'images/about-factory', 800, 'webp');
             Gallery::create(['path' => $path]);
         }
 

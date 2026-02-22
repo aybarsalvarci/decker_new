@@ -39,7 +39,7 @@ class TechnicalCertificateController extends Controller
 
         if ($request->hasFile('image')) {
 
-            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
+            $data['image'] = ImageService::upload($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {
@@ -87,7 +87,7 @@ class TechnicalCertificateController extends Controller
                 Storage::disk('public')->delete($certificate->image);
             }
 
-            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/certificates', 800, "webp");
+            $data['image'] = ImageService::upload($request->file('image'), 'images/certificates', 800, "webp");
         }
 
         if ($request->hasFile('file')) {

@@ -82,7 +82,7 @@ class ResourceController extends Controller
     public function uploadImage(Request $request)
     {
         if($request->hasFile('image')) {
-            $image = ImageService::uploadWithEncoding($request->file('image'), 'images/resources', 800, 'webp');
+            $image = ImageService::upload($request->file('image'), 'images/resources', 800, 'webp');
 
             return response()->json([
                 "url" => asset('storage/' . $image)

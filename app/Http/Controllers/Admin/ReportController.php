@@ -38,7 +38,7 @@ class ReportController extends Controller
         $data = $request->validated();
 
         if($request->hasFile('image')){
-            $data['image'] = ImageService::uploadWithEncoding($request->file('image'), 'images/reports', 800, 'webp');
+            $data['image'] = ImageService::upload($request->file('image'), 'images/reports', 800, 'webp');
         }
 
         //slug
@@ -49,7 +49,7 @@ class ReportController extends Controller
 
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $file) {
-                $path = ImageService::uploadWithEncoding($request->file('image'), 'images/reports', 800, 'webp');
+                $path = ImageService::upload($request->file('image'), 'images/reports', 800, 'webp');
 
                 $report->images()->create([
                     'path' => $path
@@ -153,7 +153,7 @@ class ReportController extends Controller
     public function uploadImage(Request $request)
     {
         if($request->hasFile('image')) {
-            $image = ImageService::uploadWithEncoding($request->file('image'), 'images/reports/content', 800, 'webp');
+            $image = ImageService::upload($request->file('image'), 'images/reports/content', 800, 'webp');
 
             return response()->json([
                 "url" => asset('storage/' . $image)
