@@ -1,4 +1,4 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/ayb1e1alvarccom/demo.aybarsalvarci.com
+    - export DEPLOYPATH=/home/fixerr/deck-er.us
     - /bin/cp -R * $DEPLOYPATH

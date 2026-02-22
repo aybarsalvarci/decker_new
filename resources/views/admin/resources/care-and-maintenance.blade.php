@@ -116,18 +116,46 @@
 
     <script>
         $(function () {
+            const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+
             $('.summernote').summernote({
-                height: 400, // Tablolar olacağı için editörü biraz daha uzun tuttuk
+                height: 400,
                 toolbar: [
                     ['style', ['style']],
                     ['font', ['bold', 'underline', 'clear']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']], // Tablo butonu burada aktif
+                    ['table', ['table']],
                     ['insert', ['link', 'picture', 'video']],
                     ['view', ['fullscreen', 'codeview']]
-                ]
+                ],
+                callbacks: {
+                    onImageUpload: function (files) { uploadImage(files[0], $(this)); },
+                    onMediaDelete: function (target) { deleteFile(target[0].src); }
+                }
             });
+
+            // Summernote Image Upload
+            function uploadImage(file, editor) {
+                let data = new FormData();
+                data.append("image", file);
+                data.append("_token", CSRF_TOKEN);
+                $.ajax({
+                    url: "{{ route('admin.resources.upload-image') }}",
+                    cache: false, contentType: false, processData: false,
+                    data: data, type: "POST",
+                    success: function (response) { editor.summernote('insertImage', response.url); },
+                    error: function () { alert("Image upload failed!"); }
+                });
+            }
+
+            function deleteFile(src) {
+                $.ajax({
+                    url: "{{ route('admin.resources.delete-image') }}",
+                    type: "POST",
+                    data: { src: src, _token: CSRF_TOKEN }
+                });
+            }
         });
     </script>
 @endpush
