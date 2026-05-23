@@ -41,7 +41,7 @@ class UpdateAboutRequest extends FormRequest
             'story_subtitle_esp' => 'nullable|string|max:255',
             'story_content_en' => 'nullable|string',
             'story_content_esp' => 'nullable|string',
-            'story_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
+            'story_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
 
             // Factory Section Headers (YENİ EKLENDİ)
             // Bu alanlar opsiyonel olabilir, sadece liste kullanmak isteyebilirsiniz.
