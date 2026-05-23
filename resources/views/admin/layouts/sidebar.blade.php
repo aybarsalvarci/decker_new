@@ -97,6 +97,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{route('admin.contact.infos')}}"
+                       class="nav-link {{request()->routeIs('admin.contact.infos') ? 'active' : ''}}">
+                        <i class="nav-icon fas fa-user-edit"></i>
+                        <p>Manage Contact Page</p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{route('admin.report.index')}}"
                        class="nav-link {{request()->routeIs('admin.report.*') ? 'active' : ''}}">
                         <i class="nav-icon fas fa-file-alt"></i>
