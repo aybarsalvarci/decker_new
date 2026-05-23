@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
             "title_esp" => "required|string|min:3|max:50",
             "desc_en" => "required|string|min:3|max:500",
             "desc_esp" => "required|string|min:3|max:500",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif,webp|max:2048",
+            "image" => "required|image|mimes:jpeg,png,jpg,gif,webp|max:10240",
         ];
     }
 }

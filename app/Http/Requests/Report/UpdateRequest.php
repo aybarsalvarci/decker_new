@@ -29,9 +29,9 @@ class UpdateRequest extends FormRequest
             'content_en' => 'required|string',
             'content_esp' => 'required|string',
             'type' => 'required|string|in:news,exhibition',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'images' => 'nullable|array|max:10',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'old_images' => 'nullable|array|max:10',
             'old_images.*' => 'exists:report_images,id',
         ];

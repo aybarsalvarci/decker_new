@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
 
         return [
             'name' => ['bail', 'required', 'string', Rule::unique('product_colors', 'name')->ignore($id)],
-            'image' => 'bail|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'bail|sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ];
     }
 }

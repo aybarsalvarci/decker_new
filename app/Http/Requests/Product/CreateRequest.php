@@ -34,7 +34,7 @@ class CreateRequest extends FormRequest
             'isPriceable' => 'required|boolean',
 
             'images' => 'required|array|max:10',
-            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:8096',
+            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:10240',
         ];
     }
 

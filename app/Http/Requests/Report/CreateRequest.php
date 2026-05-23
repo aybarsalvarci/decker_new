@@ -28,10 +28,10 @@ class CreateRequest extends FormRequest
             'slug_esp' => 'nullable|string|max:255',
             'content_en' => 'required|string',
             'content_esp' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:10240',
             'type' => 'required|string|in:news,exhibition',
             'images' => 'nullable|array|max:10',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:4096',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:10240',
         ];
     }
 }

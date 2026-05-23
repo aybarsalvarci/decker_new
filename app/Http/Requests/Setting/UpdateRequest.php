@@ -24,9 +24,9 @@ class UpdateRequest extends FormRequest
         return [
             'site_title_en'   => 'required|string|max:255',
             'site_title_esp'  => 'required|string|max:255',
-            'header_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
-            'footer_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:4096',
-            'favicon'         => 'nullable|image|mimes:jpeg,png,jpg,webp,ico|max:512',
+            'header_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'footer_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'favicon'         => 'nullable|image|mimes:jpeg,png,jpg,webp,ico|max:10240',
 
             'email'           => 'required|email:rfc,dns|max:255',
             'phone_number'    => 'required|string|max:50',

@@ -23,7 +23,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'name' => 'bail|required|string|unique:product_colors,name',
-            'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ];
     }
 }

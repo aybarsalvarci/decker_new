@@ -36,7 +36,7 @@ class UpdateRequest extends FormRequest
             'deleted_images'   => 'nullable|array',
             'deleted_images.*' => 'integer|exists:product_images,id',
             'new_images'      => 'nullable|array|max:10',
-            'new_images.*'    => 'image|mimes:jpeg,jpg,png,webp|max:2048',
+            'new_images.*'    => 'image|mimes:jpeg,jpg,png,webp|max:10240',
         ];
     }
 

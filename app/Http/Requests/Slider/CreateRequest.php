@@ -25,7 +25,7 @@ class CreateRequest extends FormRequest
     {
         return [
             'type' => "required",
-            'image_file' => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            'image_file' => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240",
             'video_url' => "nullable|url",
             'order' => 'nullable|integer',
         ];

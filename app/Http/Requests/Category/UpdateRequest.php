@@ -32,7 +32,7 @@ class UpdateRequest extends FormRequest
             'description_en'  => "bail|nullable|string|max:255",
             'description_esp' => "bail|nullable|string|max:255",
 
-            "image"           => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048",
+            "image"           => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
 
             "icons"           => "bail|nullable|array",
             "icons.*.class"   => "bail|required_with:icons|string|max:100",

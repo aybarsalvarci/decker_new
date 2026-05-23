@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
             'title_esp' => 'required|string|max:60',
             'description_en' => 'required|string|max:300',
             'description_esp' => 'required|string|max:300',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:4096',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240',
         ];
     }
 
