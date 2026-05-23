@@ -24,7 +24,7 @@
                 <!-- Dashboard -->
                 <li class="nav-item">
                     <a href="{{ route('admin.dashboard') }}" class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-fire"></i>
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
@@ -34,35 +34,35 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.category.index') }}" class="nav-link {{ request()->routeIs('admin.category.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-folder"></i>
+                        <i class="nav-icon fas fa-layer-group"></i>
                         <p>Categories</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.product.index') }}" class="nav-link {{ request()->routeIs('admin.product.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-box"></i>
+                        <i class="nav-icon fas fa-boxes"></i>
                         <p>Products</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.offer.index') }}" class="nav-link {{ request()->routeIs('admin.offer.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-paper-plane"></i>
+                        <i class="nav-icon fas fa-gift"></i>
                         <p>Offers</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.contact.index') }}" class="nav-link {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-envelope"></i>
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
                         <p>İletişim Mesajları</p>
                     </a>
                 </li>
 
                 <li class="nav-item {{ request()->routeIs('admin.free-sample.*') ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs('admin.free-sample.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-flask"></i>
+                        <i class="nav-icon fas fa-box-open"></i>
                         <p>
                             Free Samples
                             <i class="right fas fa-angle-left"></i>
@@ -71,13 +71,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.free-sample.index') }}" class="nav-link {{ request()->routeIs('admin.free-sample.index') ? 'active' : '' }}">
-                                <i class="fas fa-inbox nav-icon"></i>
+                                <i class="fas fa-clipboard-list nav-icon"></i>
                                 <p>Sample Requests</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.free-sample.box.index') }}" class="nav-link {{ request()->routeIs('admin.free-sample.box.*') ? 'active' : '' }}">
-                                <i class="fas fa-archive nav-icon"></i>
+                                <i class="fas fa-cubes nav-icon"></i>
                                 <p>Sample Boxes</p>
                             </a>
                         </li>
@@ -89,14 +89,14 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.home-settings.index') }}" class="nav-link {{ request()->routeIs('admin.home-settings.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-desktop"></i>
+                        <i class="nav-icon fas fa-window-maximize"></i>
                         <p>Manage Homepage</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.about.index') }}" class="nav-link {{ request()->routeIs('admin.about.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-user-edit"></i>
+                        <i class="nav-icon fas fa-id-card"></i>
                         <p>Manage About Page</p>
                     </a>
                 </li>
@@ -110,14 +110,14 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.report.index') }}" class="nav-link {{ request()->routeIs('admin.report.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-file-alt"></i>
+                        <i class="nav-icon fas fa-newspaper"></i>
                         <p>Reports (News)</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="{{ route('admin.product-color.index') }}" class="nav-link {{ request()->routeIs('admin.product-color.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-eye-dropper"></i>
+                        <i class="nav-icon fas fa-palette"></i>
                         <p>Product Colors</p>
                     </a>
                 </li>
@@ -132,7 +132,7 @@
                 <!-- Resource Center Treeview -->
                 <li class="nav-item {{ request()->routeIs(['admin.resources.*', 'admin.technical.*']) ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ request()->routeIs(['admin.resources.*', 'admin.technical.*']) ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-database"></i>
+                        <i class="nav-icon fas fa-folder-open"></i>
                         <p>
                             Resource Center
                             <i class="right fas fa-angle-left"></i>
@@ -141,37 +141,37 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.catalog') }}" class="nav-link {{ request()->routeIs('admin.resources.catalog') ? 'active' : '' }}">
-                                <i class="fas fa-book nav-icon"></i>
+                                <i class="fas fa-book-open nav-icon"></i>
                                 <p>Online Catalog</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.installation-guides.index') }}" class="nav-link {{ request()->routeIs('admin.resources.installation-guides.*') ? 'active' : '' }}">
-                                <i class="fas fa-stream nav-icon"></i>
+                                <i class="fas fa-tools nav-icon"></i>
                                 <p>Installation Guides</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.warranties') }}" class="nav-link {{ request()->routeIs('admin.resources.warranties') ? 'active' : '' }}">
-                                <i class="fas fa-check-double nav-icon"></i>
+                                <i class="fas fa-shield-alt nav-icon"></i>
                                 <p>Warranties</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.care-and-maintenance') }}" class="nav-link {{ request()->routeIs('admin.resources.care-and-maintenance') ? 'active' : '' }}">
-                                <i class="fas fa-magic nav-icon"></i>
+                                <i class="fas fa-hand-sparkles nav-icon"></i>
                                 <p>Care & Maintenance</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.gallery.index') }}" class="nav-link {{ request()->routeIs('admin.resources.gallery.*') ? 'active' : '' }}">
-                                <i class="fas fa-camera-retro nav-icon"></i>
+                                <i class="fas fa-images nav-icon"></i>
                                 <p>Gallery</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('admin.resources.technical-certificates.index') }}" class="nav-link {{ request()->routeIs('admin.resources.technical-certificates.*') ? 'active' : '' }}">
-                                <i class="fas fa-stamp nav-icon"></i>
+                                <i class="fas fa-certificate nav-icon"></i>
                                 <p>Technical Certificates</p>
                             </a>
                         </li>
@@ -183,7 +183,7 @@
 
                 <li class="nav-item">
                     <a href="{{ route('admin.setting.index') }}" class="nav-link {{ request()->routeIs('admin.setting.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cog"></i>
+                        <i class="nav-icon fas fa-cogs"></i>
                         <p>General Settings</p>
                     </a>
                 </li>
