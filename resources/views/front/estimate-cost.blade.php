@@ -99,11 +99,8 @@
                             <div class="est-card">
                                 <img src="{{asset('storage/' . $product->mainImage->image)}}" class="est-img" alt="{{$product->name_en}}"/>
                                 <div class="est-details">
-                                    {{-- Çok dilli isim kullanımı --}}
                                     <h3>{{ app()->getLocale() == 'en' ? $product->name_en : $product->name_esp }}</h3>
-                                    <div class="est-desc">
-                                        {{ str()->limit(app()->getLocale() == 'en' ? $product->description_en : $product->description_esp, 120, "...") }}
-                                    </div>
+
 
                                     <div class="est-input-group">
                                         @if($product->isSized)
