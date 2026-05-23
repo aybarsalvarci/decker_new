@@ -30,7 +30,7 @@ class CreateRequest extends FormRequest
             "slug_esp"        => "bail|nullable|string|min:3|max:255",
             'description_en'  => "bail|nullable|string|max:255",
             'description_esp' => "bail|nullable|string|max:255",
-            "image"           => "bail|required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048",
+            "image"           => "bail|required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
 
             "icons"           => "bail|nullable|array",
 
