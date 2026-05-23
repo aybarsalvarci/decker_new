@@ -53,10 +53,11 @@
                     </a>
                 </li>
 
+                <!-- İletişim Mesajları (Düzeltildi) -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.contact.index') }}" class="nav-link {{ request()->routeIs('admin.contact.*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.contact.index') }}" class="nav-link {{ (request()->routeIs('admin.contact.*') && !request()->routeIs('admin.contact.infos')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-envelope-open-text"></i>
-                        <p>İletişim Mesajları</p>
+                        <p>Contact Messages</p>
                     </a>
                 </li>
 
