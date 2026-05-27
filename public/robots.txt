@@ -5,6 +5,7 @@ Disallow: /vendor/
 Disallow: /base/
 Disallow: /cgi-bin/
 
+Disallow: /storage/
 Disallow: /admin/
 Disallow: /login
 
