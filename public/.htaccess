@@ -1,8 +1,9 @@
-
+Options -Indexes
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
+
+
     # 1. WWW ve HTTPS ZORUNLULUĞU (Buraya Ekledik)
     # Eğer siteye WWW olmadan girilirse VEYA HTTPS olmadan girilirse yönlendir.
     RewriteCond %{HTTP_HOST} !^www\. [NC,OR]
