@@ -35,8 +35,10 @@ class UpdateRequest extends FormRequest
             "image"           => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
 
             "hero_image" => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
-            "hero_title"         => "bail|nullable|string|min:3|max:255",
-            "hero_subtitle"         => "bail|nullable|string|min:3|max:255",
+            "hero_title_en"         => "bail|nullable|string|min:3|max:255",
+            "hero_title_esp"         => "bail|nullable|string|min:3|max:255",
+            "hero_subtitle_en"         => "bail|nullable|string|min:3|max:255",
+            "hero_subtitle_esp"         => "bail|nullable|string|min:3|max:255",
 
             "icons"           => "bail|nullable|array",
             "icons.*.class"   => "bail|required_with:icons|string|max:100",

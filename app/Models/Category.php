@@ -24,6 +24,16 @@ class Category extends Model
         return $this->{'description_' . app()->getLocale()};
     }
 
+    public function getHeroTitleAttribute()
+    {
+        return $this->{'hero_title_' . app()->getLocale()};
+    }
+
+    public function getHeroSubtitleAttribute()
+    {
+        return $this->{'hero_subtitle_' . app()->getLocale()};
+    }
+
     public function products() : HasMany
     {
         return $this->hasMany(Product::class);

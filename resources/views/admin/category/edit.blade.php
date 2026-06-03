@@ -76,6 +76,7 @@
                         @method('PUT')
 
                         <div class="card-body p-4">
+                            <!-- Dil Bölümleri -->
                             <div class="row">
                                 <div class="col-md-6 pr-md-4 border-right">
                                     <div class="section-title text-primary"><i class="fas fa-globe-americas mr-1"></i> English Content</div>
@@ -146,31 +147,64 @@
 
                             <hr class="my-4">
 
+                            <!-- Hero Bölümü -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="section-title text-success"><i class="fas fa-star mr-1"></i> Hero Section (Optional)</div>
                                 </div>
 
+                                <!-- English Hero Content -->
                                 <div class="col-md-6 pr-md-4 border-right">
+                                    <div class="text-primary font-weight-bold mb-3">
+                                        <i class="fas fa-globe-americas mr-1"></i> English Hero Content
+                                    </div>
+
                                     <div class="form-group">
-                                        <label for="hero_title">Hero Title</label>
-                                        <input type="text" name="hero_title" id="hero_title"
-                                               class="form-control @error('hero_title') is-invalid @enderror"
-                                               value="{{ old('hero_title', $category->hero_title) }}" placeholder="Optional hero title">
-                                        @error('hero_title') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <label for="hero_title_en">Hero Title (English)</label>
+                                        <input type="text" name="hero_title_en" id="hero_title_en"
+                                               class="form-control @error('hero_title_en') is-invalid @enderror"
+                                               value="{{ old('hero_title_en', $category->hero_title_en) }}" placeholder="Optional English hero title">
+                                        @error('hero_title_en') <span class="invalid-feedback">{{$message}}</span> @enderror
                                         <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="hero_subtitle">Hero Subtitle</label>
-                                        <input type="text" name="hero_subtitle" id="hero_subtitle"
-                                               class="form-control @error('hero_subtitle') is-invalid @enderror"
-                                               value="{{ old('hero_subtitle', $category->hero_subtitle) }}" placeholder="Optional hero subtitle">
-                                        @error('hero_subtitle') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <label for="hero_subtitle_en">Hero Subtitle (English)</label>
+                                        <input type="text" name="hero_subtitle_en" id="hero_subtitle_en"
+                                               class="form-control @error('hero_subtitle_en') is-invalid @enderror"
+                                               value="{{ old('hero_subtitle_en', $category->hero_subtitle_en) }}" placeholder="Optional English hero subtitle">
+                                        @error('hero_subtitle_en') <span class="invalid-feedback">{{$message}}</span> @enderror
                                     </div>
                                 </div>
 
+                                <!-- Spanish Hero Content -->
                                 <div class="col-md-6 pl-md-4">
+                                    <div class="text-info font-weight-bold mb-3">
+                                        <i class="fas fa-language mr-1"></i> Spanish Hero Content
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_title_esp">Hero Title (Spanish)</label>
+                                        <input type="text" name="hero_title_esp" id="hero_title_esp"
+                                               class="form-control @error('hero_title_esp') is-invalid @enderror"
+                                               value="{{ old('hero_title_esp', $category->hero_title_esp) }}" placeholder="Título hero opcional">
+                                        @error('hero_title_esp') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_subtitle_esp">Hero Subtitle (Spanish)</label>
+                                        <input type="text" name="hero_subtitle_esp" id="hero_subtitle_esp"
+                                               class="form-control @error('hero_subtitle_esp') is-invalid @enderror"
+                                               value="{{ old('hero_subtitle_esp', $category->hero_subtitle_esp) }}" placeholder="Subtítulo hero opcional">
+                                        @error('hero_subtitle_esp') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hero Image -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
                                     <div class="image-preview-container mb-3">
                                         <div class="preview-box">
                                             <label class="small text-muted">Current Hero Image</label>
@@ -191,22 +225,25 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="hero_image">Update Hero Image</label>
-                                        <div class="custom-file">
-                                            <input type="file" name="hero_image" id="hero_image"
-                                                   class="custom-file-input @error('hero_image') is-invalid @enderror"
-                                                   onchange="previewHeroImage(this)">
-                                            <label class="custom-file-label" id="hero-file-label" for="hero_image">Choose new file...</label>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 pr-md-4">
+                                            <label for="hero_image">Update Hero Image</label>
+                                            <div class="custom-file">
+                                                <input type="file" name="hero_image" id="hero_image"
+                                                       class="custom-file-input @error('hero_image') is-invalid @enderror"
+                                                       onchange="previewHeroImage(this)">
+                                                <label class="custom-file-label" id="hero-file-label" for="hero_image">Choose new file...</label>
+                                            </div>
+                                            @error('hero_image') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                            <small class="form-text text-muted mt-1">If left blank, the default image will be used.</small>
                                         </div>
-                                        @error('hero_image') <span class="invalid-feedback">{{$message}}</span> @enderror
-                                        <small class="form-text text-muted mt-1">If left blank, the default image will be used.</small>
                                     </div>
                                 </div>
                             </div>
 
                             <hr class="my-4">
 
+                            <!-- Medya Bölümü -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="section-title text-secondary"><i class="fas fa-image mr-1"></i> Category Media</div>
@@ -231,19 +268,22 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        <label for="image">Update Image <small class="text-muted">(Leave empty to keep current)</small></label>
-                                        <div class="custom-file">
-                                            <input type="file" name="image" id="image"
-                                                   class="custom-file-input @error('image') is-invalid @enderror"
-                                                   onchange="previewImage(this)">
-                                            <label class="custom-file-label" id="file-label" for="image">Choose new file...</label>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 pr-md-4">
+                                            <label for="image">Update Image <small class="text-muted">(Leave empty to keep current)</small></label>
+                                            <div class="custom-file">
+                                                <input type="file" name="image" id="image"
+                                                       class="custom-file-input @error('image') is-invalid @enderror"
+                                                       onchange="previewImage(this)">
+                                                <label class="custom-file-label" id="file-label" for="image">Choose new file...</label>
+                                            </div>
+                                            @error('image') <span class="invalid-feedback">{{$message}}</span> @enderror
                                         </div>
-                                        @error('image') <span class="invalid-feedback">{{$message}}</span> @enderror
                                     </div>
                                 </div>
                             </div>
 
+                            <!-- İkon Bölümü -->
                             <div class="row mt-4">
                                 <div class="col-md-12">
                                     <div class="section-title text-warning">

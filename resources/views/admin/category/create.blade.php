@@ -142,26 +142,58 @@
                                     </div>
                                 </div>
 
+                                <!-- English Hero Content -->
                                 <div class="col-md-6 pr-md-4 border-right">
+                                    <div class="text-primary font-weight-bold mb-3">
+                                        <i class="fas fa-globe-americas mr-1"></i> English Hero Content
+                                    </div>
+
                                     <div class="form-group">
-                                        <label for="hero_title">Hero Title</label>
-                                        <input type="text" name="hero_title" id="hero_title"
-                                               class="form-control @error('hero_title') is-invalid @enderror"
-                                               value="{{old('hero_title')}}" placeholder="Optional hero title">
-                                        @error('hero_title') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <label for="hero_title_en">Hero Title (English)</label>
+                                        <input type="text" name="hero_title_en" id="hero_title_en"
+                                               class="form-control @error('hero_title_en') is-invalid @enderror"
+                                               value="{{old('hero_title_en')}}" placeholder="Optional English hero title">
+                                        @error('hero_title_en') <span class="invalid-feedback">{{$message}}</span> @enderror
                                         <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="hero_subtitle">Hero Subtitle</label>
-                                        <input type="text" name="hero_subtitle" id="hero_subtitle"
-                                               class="form-control @error('hero_subtitle') is-invalid @enderror"
-                                               value="{{old('hero_subtitle')}}" placeholder="Optional hero subtitle">
-                                        @error('hero_subtitle') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <label for="hero_subtitle_en">Hero Subtitle (English)</label>
+                                        <input type="text" name="hero_subtitle_en" id="hero_subtitle_en"
+                                               class="form-control @error('hero_subtitle_en') is-invalid @enderror"
+                                               value="{{old('hero_subtitle_en')}}" placeholder="Optional English hero subtitle">
+                                        @error('hero_subtitle_en') <span class="invalid-feedback">{{$message}}</span> @enderror
                                     </div>
                                 </div>
 
+                                <!-- Spanish Hero Content -->
                                 <div class="col-md-6 pl-md-4">
+                                    <div class="text-info font-weight-bold mb-3">
+                                        <i class="fas fa-language mr-1"></i> Spanish Hero Content
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_title_esp">Hero Title (Spanish)</label>
+                                        <input type="text" name="hero_title_esp" id="hero_title_esp"
+                                               class="form-control @error('hero_title_esp') is-invalid @enderror"
+                                               value="{{old('hero_title_esp')}}" placeholder="Título hero opcional">
+                                        @error('hero_title_esp') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_subtitle_esp">Hero Subtitle (Spanish)</label>
+                                        <input type="text" name="hero_subtitle_esp" id="hero_subtitle_esp"
+                                               class="form-control @error('hero_subtitle_esp') is-invalid @enderror"
+                                               value="{{old('hero_subtitle_esp')}}" placeholder="Subtítulo hero opcional">
+                                        @error('hero_subtitle_esp') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Hero Image -->
+                            <div class="row mt-3">
+                                <div class="col-md-6 pr-md-4">
                                     <div class="form-group">
                                         <label for="hero_image">Hero Image</label>
                                         <div class="custom-file">

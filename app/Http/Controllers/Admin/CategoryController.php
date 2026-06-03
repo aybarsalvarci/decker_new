@@ -7,7 +7,6 @@ use App\Http\Requests\Category\CreateRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Http\Services\ImageService;
 use App\Models\Category;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -63,7 +62,12 @@ class CategoryController extends Controller
                 'description_esp' => $data['description_esp'] ?? null,
 
                 'image' => $data['image'],
+
                 'hero_image' => $data['hero_image'],
+                'hero_title_en' => $data['hero_title_en'],
+                'hero_title_esp' => $data['hero_title_esp'],
+                'hero_subtitle_en' => $data['hero_subtitle_en'],
+                'hero_subtitle_esp' => $data['hero_subtitle_esp'],
             ]);
 
             if (!empty($request->icons)) {

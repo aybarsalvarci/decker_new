@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('hero_image')->nullable()->after('image');
             $table->string('hero_title_en')->nullable()->after('hero_image');
             $table->string('hero_title_esp')->nullable()->after('hero_title_en');
-            $table->string('hero_subtitle_en')->nullable()->after('hero_title');
-            $table->string('hero_subtitle_esp')->nullable()->after('hero_subtitle');
+            $table->string('hero_subtitle_en')->nullable()->after('hero_title_esp');
+            $table->string('hero_subtitle_esp')->nullable()->after('hero_subtitle_en');
         });
     }
 
