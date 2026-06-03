@@ -9,7 +9,6 @@
 @section('og_title', "")
 @section('og_description', "")
 @section('og_image', "")
-@section('og_title', "")
 
 @push('schema')
     @php
@@ -58,7 +57,7 @@
             </video>
             <div class="slide-overlay"></div>
             <div class="hero-content">
-                <h1>{{$homePageSettings->topVideoTitle}}</h1>
+                <h2>{{$homePageSettings->topVideoTitle}}</h2>
                 <p>{{$homePageSettings->topVideoDesc}}</p>
             </div>
         </div>
