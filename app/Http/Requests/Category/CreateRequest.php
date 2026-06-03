@@ -23,14 +23,17 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // Mevcut Alanlar
             "name_en"         => "bail|required|string|min:3|max:255",
             "name_esp"        => "bail|required|string|min:3|max:255",
-            "slug_en"         => "bail|nullable|string|min:3|max:255", // Unique kontrolü eklemen önerilir: |unique:categories,slug_en
+            "slug_en"         => "bail|nullable|string|min:3|max:255",
             "slug_esp"        => "bail|nullable|string|min:3|max:255",
             'description_en'  => "bail|nullable|string|max:255",
             'description_esp' => "bail|nullable|string|max:255",
             "image"           => "bail|required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
+
+            "hero_image" => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
+            "hero_title"         => "bail|nullable|string|min:3|max:255",
+            "hero_subtitle"         => "bail|nullable|string|min:3|max:255",
 
             "icons"           => "bail|nullable|array",
 

@@ -148,6 +148,67 @@
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="section-title text-success"><i class="fas fa-star mr-1"></i> Hero Section (Optional)</div>
+                                </div>
+
+                                <div class="col-md-6 pr-md-4 border-right">
+                                    <div class="form-group">
+                                        <label for="hero_title">Hero Title</label>
+                                        <input type="text" name="hero_title" id="hero_title"
+                                               class="form-control @error('hero_title') is-invalid @enderror"
+                                               value="{{ old('hero_title', $category->hero_title) }}" placeholder="Optional hero title">
+                                        @error('hero_title') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_subtitle">Hero Subtitle</label>
+                                        <input type="text" name="hero_subtitle" id="hero_subtitle"
+                                               class="form-control @error('hero_subtitle') is-invalid @enderror"
+                                               value="{{ old('hero_subtitle', $category->hero_subtitle) }}" placeholder="Optional hero subtitle">
+                                        @error('hero_subtitle') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pl-md-4">
+                                    <div class="image-preview-container mb-3">
+                                        <div class="preview-box">
+                                            <label class="small text-muted">Current Hero Image</label>
+                                            <div class="img-wrapper shadow-sm border">
+                                                @if($category->hero_image)
+                                                    <img src="{{ asset('storage/' . $category->hero_image) }}" alt="Current Hero">
+                                                @else
+                                                    <span class="text-muted small">No Image</span>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="preview-box" id="new-hero-preview-box" style="display: none;">
+                                            <label class="small text-primary font-weight-bold">New Selection Preview</label>
+                                            <div class="img-wrapper border-primary shadow-sm">
+                                                <img src="" id="hero-preview-img">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_image">Update Hero Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="hero_image" id="hero_image"
+                                                   class="custom-file-input @error('hero_image') is-invalid @enderror"
+                                                   onchange="previewHeroImage(this)">
+                                            <label class="custom-file-label" id="hero-file-label" for="hero_image">Choose new file...</label>
+                                        </div>
+                                        @error('hero_image') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted mt-1">If left blank, the default image will be used.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="section-title text-secondary"><i class="fas fa-image mr-1"></i> Category Media</div>
 
                                     <div class="image-preview-container mb-3">
@@ -296,10 +357,28 @@
             if (slugEsp.value === '') slugEsp.value = convertToSlug(this.value);
         });
 
+        // Ana Kategori Resmi Önizleme
         function previewImage(input) {
             const img = document.getElementById('preview-img');
             const newBox = document.getElementById('new-preview-box');
             const label = document.getElementById('file-label');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    img.src = e.target.result;
+                    newBox.style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+                label.innerText = input.files[0].name;
+            }
+        }
+
+        // Hero Resmi Önizleme
+        function previewHeroImage(input) {
+            const img = document.getElementById('hero-preview-img');
+            const newBox = document.getElementById('new-hero-preview-box');
+            const label = document.getElementById('hero-file-label');
 
             if (input.files && input.files[0]) {
                 const reader = new FileReader();

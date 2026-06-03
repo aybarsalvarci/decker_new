@@ -41,6 +41,10 @@ class CategoryController extends Controller
                 $data['image'] =ImageService::upload($request->file('image'), 'images/categories', 400, 'webp');
             }
 
+            if ($request->hasFile('hero_image')) {
+                $data['hero_image'] =ImageService::upload($request->file('hero_image'), 'images/categories', format:'webp');
+            }
+
             $data['slug_en'] = $request->slug_en
                 ? Str::slug($request->slug_en)
                 : Str::slug($request->name_en);
@@ -59,6 +63,7 @@ class CategoryController extends Controller
                 'description_esp' => $data['description_esp'] ?? null,
 
                 'image' => $data['image'],
+                'hero_image' => $data['hero_image'],
             ]);
 
             if (!empty($request->icons)) {
@@ -98,6 +103,14 @@ class CategoryController extends Controller
 
                 if ($category->image && Storage::disk('public')->exists($category->image)) {
                     Storage::disk('public')->delete($category->image);
+                }
+            }
+
+            if ($request->hasFile('hero_image')) {
+                $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/categories', format:'webp');
+
+                if ($category->hero_image && Storage::disk('public')->exists($category->hero_image)) {
+                    Storage::disk('public')->delete($category->hero_image);
                 }
             }
 
@@ -154,6 +167,11 @@ class CategoryController extends Controller
         if(Storage::disk('public')->exists($category->image))
         {
             Storage::disk('public')->delete($category->image);
+        }
+
+        if(Storage::disk('public')->exists($category->hero_image))
+        {
+            Storage::disk('public')->delete($category->hero_image);
         }
 
         $category->delete();

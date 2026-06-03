@@ -65,6 +65,7 @@
                     <form action="{{route('admin.category.store')}}" method="post" enctype="multipart/form-data" id="categoryForm">
                         @csrf
                         <div class="card-body p-4">
+                            <!-- Dil Bölümleri -->
                             <div class="row">
                                 <div class="col-md-6 pr-md-4 border-right">
                                     <div class="section-title text-primary">
@@ -133,6 +134,57 @@
                                 </div>
                             </div>
 
+                            <!-- Hero Bölümü -->
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="section-title text-success">
+                                        <i class="fas fa-star mr-1"></i> Hero Section (Optional)
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pr-md-4 border-right">
+                                    <div class="form-group">
+                                        <label for="hero_title">Hero Title</label>
+                                        <input type="text" name="hero_title" id="hero_title"
+                                               class="form-control @error('hero_title') is-invalid @enderror"
+                                               value="{{old('hero_title')}}" placeholder="Optional hero title">
+                                        @error('hero_title') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted">If left blank, the category name will be shown instead.</small>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="hero_subtitle">Hero Subtitle</label>
+                                        <input type="text" name="hero_subtitle" id="hero_subtitle"
+                                               class="form-control @error('hero_subtitle') is-invalid @enderror"
+                                               value="{{old('hero_subtitle')}}" placeholder="Optional hero subtitle">
+                                        @error('hero_subtitle') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 pl-md-4">
+                                    <div class="form-group">
+                                        <label for="hero_image">Hero Image</label>
+                                        <div class="custom-file">
+                                            <input type="file" name="hero_image" id="hero_image"
+                                                   class="custom-file-input @error('hero_image') is-invalid @enderror"
+                                                   onchange="previewHeroImage(this)">
+                                            <label class="custom-file-label" id="hero-file-label" for="hero_image">Choose hero image...</label>
+                                        </div>
+                                        @error('hero_image') <span class="invalid-feedback">{{$message}}</span> @enderror
+                                        <small class="form-text text-muted mt-1">If left blank, the default image will be used.</small>
+
+                                        <div class="image-preview shadow-sm mt-2" id="hero-preview-container">
+                                            <div id="hero-preview-placeholder" class="text-center">
+                                                <i class="fas fa-cloud-upload-alt fa-2x text-muted d-block mb-2"></i>
+                                                <span class="text-muted small">Hero image preview</span>
+                                            </div>
+                                            <img src="" id="hero-preview-img" style="display:none;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Medya Bölümü -->
                             <div class="row mt-4">
                                 <div class="col-md-12">
                                     <div class="section-title text-secondary">
@@ -159,6 +211,7 @@
                                 </div>
                             </div>
 
+                            <!-- İkon Bölümü -->
                             <div class="row mt-4">
                                 <div class="col-md-12">
                                     <div class="section-title text-warning">
@@ -226,11 +279,31 @@
         nameEsp.addEventListener('input', () => { if (!isSlugEspManual) slugEsp.value = convertToSlug(nameEsp.value); });
         slugEsp.addEventListener('input', () => { isSlugEspManual = true; });
 
-        // --- 2. ANA RESİM ÖNİZLEME ---
+        // --- 2. RESİM ÖNİZLEME İŞLEMLERİ ---
+
+        // Ana Resim Önizleme
         function previewImage(input) {
             const img = document.getElementById('preview-img');
             const placeholder = document.getElementById('preview-placeholder');
             const label = document.getElementById('file-label');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                reader.readAsDataURL(input.files[0]);
+                label.innerText = input.files[0].name;
+            }
+        }
+
+        // Hero Resim Önizleme
+        function previewHeroImage(input) {
+            const img = document.getElementById('hero-preview-img');
+            const placeholder = document.getElementById('hero-preview-placeholder');
+            const label = document.getElementById('hero-file-label');
 
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
@@ -316,6 +389,11 @@
             document.getElementById('preview-img').style.display = 'none';
             document.getElementById('preview-placeholder').style.display = 'block';
             document.getElementById('file-label').innerText = 'Choose image...';
+
+            // Hero resmini sıfırla
+            document.getElementById('hero-preview-img').style.display = 'none';
+            document.getElementById('hero-preview-placeholder').style.display = 'block';
+            document.getElementById('hero-file-label').innerText = 'Choose hero image...';
 
             // İkonları temizle
             document.getElementById('icons-container').innerHTML = '';
