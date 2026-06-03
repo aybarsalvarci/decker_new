@@ -31,6 +31,10 @@ use App\Http\Controllers\Admin\{AboutController,
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
+    Route::get('/rollback-dev', function () {
+        Artisan::call('migrate:rollback');
+    });
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('category', CategoryController::class);
