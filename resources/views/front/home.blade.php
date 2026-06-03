@@ -57,7 +57,7 @@
             </video>
             <div class="slide-overlay"></div>
             <div class="hero-content">
-                <h2>{{$homePageSettings->topVideoTitle}}</h2>
+                <h1>{{$homePageSettings->topVideoTitle}}</h1>
                 <p>{{$homePageSettings->topVideoDesc}}</p>
             </div>
         </div>
