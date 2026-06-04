@@ -31,13 +31,6 @@ use App\Http\Controllers\Admin\{AboutController,
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
-    Route::get('/migrate-dev', function () {
-        Artisan::call('migrate', ['--force' => true, '--path' => 'database/migrations/2026_06_03_154643_add_hero_columns_to_categories_table.php',]);
-        $output = Artisan::output();
-
-        return "<pre>{$output}</pre>";
-    });
-
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('category', CategoryController::class);
