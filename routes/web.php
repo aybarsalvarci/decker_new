@@ -31,7 +31,7 @@ use App\Http\Controllers\Admin\{AboutController,
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
-    Route('/migrate-dev', function () {
+    Route::get('/migrate-dev', function () {
         Artisan::call('migrate', [
             '--path' => 'database/migrations/BURAYA_DOSYA_ADINI_YAZIN.php',
             '--force' => true
