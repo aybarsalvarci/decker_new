@@ -86,10 +86,10 @@
         <tr>
             <td align="center" style="background-color: #1a252f; padding: 40px 20px;">
                 <a href="{{ url('/') }}" target="_blank" style="text-decoration: none;">
-                    @if(isset($settings->logo) && file_exists(public_path('storage/' . $settings->logo)))
-                    <img src="{{ asset('storage/' . $settings->logo) }}"
-                         alt="DECK-ER"
-                         style="display: block; width: 180px; max-width: 100%; border: 0; outline: none; text-decoration: none;">
+                    @if(!is_null(config('settings.logo')) && file_exists(public_path('storage/' . config('settings.logo'))))
+                        <img src="{{ asset('storage/' . config('settings.logo')) }}"
+                             alt="DECK-ER"
+                             style="display: block; width: 180px; max-width: 100%; border: 0; outline: none; text-decoration: none;">
                     @else
                     <span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px;">
                             DECK-<span style="color: #e63946;">ER</span>
