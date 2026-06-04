@@ -85,6 +85,13 @@
                     </ul>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.offer.index') }}" class="nav-link {{ (request()->routeIs('admin.offer.*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <p>Cost Offers</p>
+                    </a>
+                </li>
+
                 <!-- CONTENT MANAGEMENT HEADER -->
                 <li class="nav-header">CONTENT MANAGEMENT</li>
 

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EstimateCost\CreateRequest;
 use App\Http\Requests\FreeSamples\CreateRequest as FreeSamplesCreateRequest;
 use App\Http\Requests\Contact\CreateRequest as ContactCreateRequest;
-use App\Mail\ContactMail;
 use App\Models\About;
 use App\Models\AboutFactory;
 use App\Models\Category;
@@ -26,8 +25,7 @@ use App\Models\Report;
 use App\Models\StaticPage;
 use App\Models\TechnicalCertificate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -73,18 +71,20 @@ class HomeController extends Controller
     public function saveEstimateCost(CreateRequest $request)
     {
         $data = $request->validated();
+        DB::transaction(function () use ($data) {
 
-        $offer = Offer::create([
-            'full_name' => $data['full_name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'message' => $data['message']
-        ]);
+            $offer = Offer::create([
+                'full_name' => $data['full_name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'message' => $data['message']
+            ]);
 
-        foreach ($data['items'] as $item) {
-            $item['offer_id'] = $offer->id;
-            OfferItem::create($item);
-        }
+            foreach ($data['items'] as $item) {
+                $item['offer_id'] = $offer->id;
+                OfferItem::create($item);
+            }
+        });
 
         return redirect()->back()->withSuccess(__("estimateCost.offer-create-success"));
     }
@@ -160,6 +160,7 @@ class HomeController extends Controller
 
         return redirect()->back()->withSuccess("Contact request received successfully");
     }
+
     // resource routes.
     public function resources()
     {
