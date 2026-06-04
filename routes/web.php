@@ -33,7 +33,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('/migrate-dev', function () {
         Artisan::call('migrate', [
-            '--path' => 'database/migrations/BURAYA_DOSYA_ADINI_YAZIN.php',
+            '--path' => 'database/migrations/2026_06_04_140621_add_hero_image_column_to_abouts_table.php',
             '--force' => true
         ]);
 
