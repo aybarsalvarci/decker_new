@@ -32,7 +32,7 @@ use App\Http\Controllers\Admin\{AboutController,
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('/migrate-dev', function () {
-        Artisan::call('migrate');
+        Artisan::call('migrate', ['--force' => true]);
         $output = Artisan::output();
 
         return "<pre>{$output}</pre>";
