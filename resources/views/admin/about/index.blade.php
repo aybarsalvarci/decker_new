@@ -41,7 +41,6 @@
             </div>
         @endif
 
-        {{-- ANA GÜNCELLEME FORMU (HERO, STORY, STATS, VALUES ve FACTORY BAŞLIKLARI İÇİN) --}}
         <form action="{{route('admin.about.update', $about->id)}}" method="post" enctype="multipart/form-data" id="mainUpdateForm">
             @csrf
             @method('PUT')
@@ -72,46 +71,68 @@
 
                         {{-- 1. HERO & VISION SECTION --}}
                         <div class="tab-pane fade show active" id="hero" role="tabpanel">
-                            <div class="section-header">Hero Section Configuration</div>
                             <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label>🇺🇸 Top Label</label>
-                                    <input type="text" name="hero_label_en" class="form-control" value="{{ old('hero_label_en', $about->hero_label_en) }}">
+                                {{-- Sol Taraf: Metin Alanları --}}
+                                <div class="col-md-8">
+                                    <div class="section-header">Hero Section Configuration</div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>🇺🇸 Top Label</label>
+                                            <input type="text" name="hero_label_en" class="form-control" value="{{ old('hero_label_en', $about->hero_label_en) }}">
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>🇪🇸 Top Label</label>
+                                            <input type="text" name="hero_label_esp" class="form-control" value="{{ old('hero_label_esp', $about->hero_label_esp) }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>🇺🇸 Main Title</label>
+                                            <textarea name="hero_title_en" rows="2" class="form-control">{{ old('hero_title_en', $about->hero_title_en) }}</textarea>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>🇪🇸 Main Title</label>
+                                            <textarea name="hero_title_esp" rows="2" class="form-control">{{ old('hero_title_esp', $about->hero_title_esp) }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>🇺🇸 Description</label>
+                                            <textarea name="hero_desc_en" rows="3" class="form-control">{{ old('hero_desc_en', $about->hero_desc_en) }}</textarea>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>🇪🇸 Description</label>
+                                            <textarea name="hero_desc_esp" rows="3" class="form-control">{{ old('hero_desc_esp', $about->hero_desc_esp) }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="section-header mt-4">Vision Statement</div>
+                                    <div class="row">
+                                        <div class="col-md-6 form-group">
+                                            <label>🇺🇸 Vision Text</label>
+                                            <textarea name="vision_en" rows="3" class="form-control">{{ old('vision_en', $about->vision_en) }}</textarea>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label>🇪🇸 Vision Text</label>
+                                            <textarea name="vision_esp" rows="3" class="form-control">{{ old('vision_esp', $about->vision_esp) }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 form-group">
-                                    <label>🇪🇸 Top Label</label>
-                                    <input type="text" name="hero_label_esp" class="form-control" value="{{ old('hero_label_esp', $about->hero_label_esp) }}">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label>🇺🇸 Main Title</label>
-                                    <textarea name="hero_title_en" rows="2" class="form-control">{{ old('hero_title_en', $about->hero_title_en) }}</textarea>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>🇪🇸 Main Title</label>
-                                    <textarea name="hero_title_esp" rows="2" class="form-control">{{ old('hero_title_esp', $about->hero_title_esp) }}</textarea>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label>🇺🇸 Description</label>
-                                    <textarea name="hero_desc_en" rows="3" class="form-control">{{ old('hero_desc_en', $about->hero_desc_en) }}</textarea>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>🇪🇸 Description</label>
-                                    <textarea name="hero_desc_esp" rows="3" class="form-control">{{ old('hero_desc_esp', $about->hero_desc_esp) }}</textarea>
-                                </div>
-                            </div>
-                            <div class="section-header mt-4">Vision Statement</div>
-                            <div class="row">
-                                <div class="col-md-6 form-group">
-                                    <label>🇺🇸 Vision Text</label>
-                                    <textarea name="vision_en" rows="3" class="form-control">{{ old('vision_en', $about->vision_en) }}</textarea>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <label>🇪🇸 Vision Text</label>
-                                    <textarea name="vision_esp" rows="3" class="form-control">{{ old('vision_esp', $about->vision_esp) }}</textarea>
+
+                                {{-- Sağ Taraf: Hero Image Yükleme Alanı --}}
+                                <div class="col-md-4">
+                                    <div class="section-header">Hero Background Image</div>
+                                    <div class="preview-box mb-2" style="height: 250px;">
+                                        <img src="{{ isset($about->hero_image) ? asset('storage/'.$about->hero_image) : asset('admin/img/no-image.png') }}" id="hero-preview">
+                                        <div class="preview-label">hero_image</div>
+                                    </div>
+                                    <div class="custom-file">
+                                        {{-- JS tarafındaki previewImage fonksiyonunuzu burada da kullandık --}}
+                                        <input type="file" name="hero_image" id="hero_image" class="custom-file-input" onchange="previewImage(this, '#hero-preview')">
+                                        <label class="custom-file-label" for="hero_image">Choose hero image</label>
+                                    </div>
+                                    <small class="text-muted d-block mt-2">
+                                        <i class="fas fa-info-circle"></i> Recommended size: 1920x1080px (veya tasarımınıza uygun boyut)
+                                    </small>
                                 </div>
                             </div>
                         </div>

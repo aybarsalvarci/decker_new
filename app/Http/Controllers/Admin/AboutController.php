@@ -42,6 +42,14 @@ class AboutController extends Controller
             $data['story_image'] = ImageService::upload(request()->file('story_image'), 'images/about', 800, 'webp');
         }
 
+        if ($request->hasFile('hero_image')) {
+            if ($about->hero_image && Storage::disk('public')->exists($about->hero_image)) {
+                Storage::disk('public')->delete($about->hero_image);
+            }
+
+            $data['hero_image'] = ImageService::upload(request()->file('hero_image'), 'images/about', format:'webp');
+        }
+
         $about->update($data);
 
         return redirect()->back()->with('success', 'About page main sections updated successfully.');

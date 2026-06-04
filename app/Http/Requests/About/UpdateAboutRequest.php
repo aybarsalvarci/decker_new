@@ -23,54 +23,54 @@ class UpdateAboutRequest extends FormRequest
     {
         $rules = [
             // Hero Section
-            'hero_label_en' => 'required|string|max:255',
-            'hero_label_esp' => 'required|string|max:255',
-            'hero_title_en' => 'required|string|max:255',
-            'hero_title_esp' => 'required|string|max:255',
-            'hero_desc_en' => 'nullable|string|max:1000', // Açıklamalar boş olabilir
-            'hero_desc_esp' => 'nullable|string|max:1000',
+            'hero_label_en' => 'bail|required|string|max:255',
+            'hero_label_esp' => 'bail|required|string|max:255',
+            'hero_title_en' => 'bail|required|string|max:255',
+            'hero_title_esp' => 'bail|required|string|max:255',
+            'hero_desc_en' => 'bail|nullable|string|max:1000',
+            'hero_desc_esp' => 'bail|nullable|string|max:1000',
+            "hero_image" => "bail|required|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
 
-            // Vision Section (YENİ EKLENDİ)
+
             'vision_en' => 'nullable|string|max:1000',
             'vision_esp' => 'nullable|string|max:1000',
 
             // Story Section
-            'story_title_en' => 'required|string|max:255',
-            'story_title_esp' => 'required|string|max:255',
-            'story_subtitle_en' => 'nullable|string|max:255',
-            'story_subtitle_esp' => 'nullable|string|max:255',
-            'story_content_en' => 'nullable|string',
-            'story_content_esp' => 'nullable|string',
-            'story_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'story_title_en' => 'bail|required|string|max:255',
+            'story_title_esp' => 'bail|required|string|max:255',
+            'story_subtitle_en' => 'bail|nullable|string|max:255',
+            'story_subtitle_esp' => 'bail|nullable|string|max:255',
+            'story_content_en' => 'bail|nullable|string',
+            'story_content_esp' => 'bail|nullable|string',
+            'story_image' => 'bail|nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
 
-            // Factory Section Headers (YENİ EKLENDİ)
-            // Bu alanlar opsiyonel olabilir, sadece liste kullanmak isteyebilirsiniz.
-            'factory_title_en' => 'nullable|string|max:255',
-            'factory_title_esp' => 'nullable|string|max:255',
-            'factory_desc_en' => 'nullable|string|max:1000',
-            'factory_desc_esp' => 'nullable|string|max:1000',
+            // Factory Section Headers
+            'factory_title_en' => 'bail|nullable|string|max:255',
+            'factory_title_esp' => 'bail|nullable|string|max:255',
+            'factory_desc_en' => 'bail|nullable|string|max:1000',
+            'factory_desc_esp' => 'bail|nullable|string|max:1000',
 
             // Values Main Titles
-            'values_title_en' => 'nullable|string|max:255',
-            'values_title_esp' => 'nullable|string|max:255',
-            'values_subtitle_en' => 'nullable|string|max:255',
-            'values_subtitle_esp' => 'nullable|string|max:255',
+            'values_title_en' => 'bail|nullable|string|max:255',
+            'values_title_esp' => 'bail|nullable|string|max:255',
+            'values_subtitle_en' => 'bail|nullable|string|max:255',
+            'values_subtitle_esp' => 'bail|nullable|string|max:255',
         ];
 
         // Statistics Loop
         for ($i = 1; $i <= 4; $i++) {
-            $rules["stat_{$i}_num"] = 'nullable|string|max:50';
-            $rules["stat_{$i}_text_en"] = 'nullable|string|max:255';
-            $rules["stat_{$i}_text_esp"] = 'nullable|string|max:255';
+            $rules["stat_{$i}_num"] = 'bail|nullable|string|max:50';
+            $rules["stat_{$i}_text_en"] = 'bail|nullable|string|max:255';
+            $rules["stat_{$i}_text_esp"] = 'bail|nullable|string|max:255';
         }
 
         // Values Loop
         for ($i = 1; $i <= 3; $i++) {
-            $rules["val_{$i}_icon"] = 'nullable|string|max:100';
-            $rules["val_{$i}_title_en"] = 'nullable|string|max:255';
-            $rules["val_{$i}_title_esp"] = 'nullable|string|max:255';
-            $rules["val_{$i}_desc_en"] = 'nullable|string|max:1000';
-            $rules["val_{$i}_desc_esp"] = 'nullable|string|max:1000';
+            $rules["val_{$i}_icon"] = 'bail|nullable|string|max:100';
+            $rules["val_{$i}_title_en"] = 'bail|nullable|string|max:255';
+            $rules["val_{$i}_title_esp"] = 'bail|nullable|string|max:255';
+            $rules["val_{$i}_desc_en"] = 'bail|nullable|string|max:1000';
+            $rules["val_{$i}_desc_esp"] = 'bail|nullable|string|max:1000';
         }
 
         return $rules;
