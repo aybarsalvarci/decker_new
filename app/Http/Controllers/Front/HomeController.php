@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\EstimateCost\CreateRequest;
 use App\Http\Requests\FreeSamples\CreateRequest as FreeSamplesCreateRequest;
 use App\Http\Requests\Contact\CreateRequest as ContactCreateRequest;
+use App\Mail\ContactMail;
 use App\Models\About;
 use App\Models\AboutFactory;
 use App\Models\Category;
@@ -25,6 +26,8 @@ use App\Models\Report;
 use App\Models\StaticPage;
 use App\Models\TechnicalCertificate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -159,7 +162,14 @@ class HomeController extends Controller
 
     public function saveContact(ContactCreateRequest $request)
     {
-        Contact::create($request->validated());
+        $contact = Contact::create($request->validated());
+
+        if(!is_null(config('mail.from.address'))){
+            Log::info("mail gönderiliyor");
+            Mail::to(config('mail.from.address'))->send(new ContactMail($contact));
+
+        }
+
         return redirect()->back()->withSuccess("Contact request received successfully");
     }
     // resource routes.
