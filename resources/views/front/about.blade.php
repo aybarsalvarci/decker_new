@@ -58,7 +58,7 @@
 
     <section class="about-hero"
              style="background-image: linear-gradient(rgb(23 32 42 / .8), rgb(23 32 42 / .8)),
-             url('{{!is_null($about->hero_image) ? 'storage/' . $about->hero_image : 'front/assets/image/about.jpg'}}');">
+             url('{{!is_null($about->hero_image) ? 'storage/' . $about->hero_image : 'front/assets/images/about.jpg'}}');">
         <div class="container">
             <span class="hero-subtitle">{{ $about->hero_label }}</span>
             <h1>{!! nl2br($about->hero_title) !!}</h1>
