@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public function store(CreateRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->safe()->except(['image', 'hero_image', 'icons']);
 
         DB::transaction(function () use ($request, &$data) {
 
@@ -52,23 +52,7 @@ class CategoryController extends Controller
                 ? Str::slug($request->slug_esp)
                 : Str::slug($request->name_esp);
 
-            $category = Category::create([
-                'name_en' => $data['name_en'],
-                'slug_en' => $data['slug_en'],
-                'description_en' => $data['description_en'] ?? null,
-
-                'name_esp' => $data['name_esp'],
-                'slug_esp' => $data['slug_esp'],
-                'description_esp' => $data['description_esp'] ?? null,
-
-                'image' => $data['image'],
-
-                'hero_image' => $data['hero_image'],
-                'hero_title_en' => $data['hero_title_en'],
-                'hero_title_esp' => $data['hero_title_esp'],
-                'hero_subtitle_en' => $data['hero_subtitle_en'],
-                'hero_subtitle_esp' => $data['hero_subtitle_esp'],
-            ]);
+            $category = Category::create($data);
 
             if (!empty($request->icons)) {
 
