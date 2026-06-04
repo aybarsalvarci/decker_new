@@ -26,11 +26,13 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->dropColumn('hero_image');
-            $table->dropColumn('hero_title_en');
-            $table->dropColumn('hero_title_esp');
-            $table->dropColumn('hero_subtitle_en');
-            $table->dropColumn('hero_subtitle_esp');
+            $table->dropColumn([
+                'hero_image',
+                'hero_title_en',
+                'hero_title_esp',
+                'hero_subtitle_en',
+                'hero_subtitle_esp'
+            ]);
         });
     }
 };

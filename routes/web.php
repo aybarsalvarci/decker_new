@@ -33,6 +33,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
 
     Route::get('/migrate-dev', function () {
         Artisan::call('migrate');
+        $output = Artisan::output();
+
+        return "<pre>{$output}</pre>";
     });
 
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
