@@ -86,8 +86,8 @@
         <tr>
             <td align="center" style="background-color: #1a252f; padding: 40px 20px;">
                 <a href="{{ url('/') }}" target="_blank" style="text-decoration: none;">
-                    @if(!is_null(config('settings.logo')) && file_exists(public_path('storage/' . config('settings.logo'))))
-                        <img src="{{ asset('storage/' . config('settings.logo')) }}"
+                    @if(!is_null(config('settings.header_logo')) && file_exists(public_path('storage/' . config('settings.header_logo'))))
+                        <img src="{{ asset('storage/' . config('settings.header_logo')) }}"
                              alt="DECK-ER"
                              style="display: block; width: 180px; max-width: 100%; border: 0; outline: none; text-decoration: none;">
                     @else
