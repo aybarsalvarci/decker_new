@@ -162,13 +162,7 @@ class HomeController extends Controller
 
     public function saveContact(ContactCreateRequest $request)
     {
-        $contact = Contact::create($request->validated());
-
-        if(!is_null(config('mail.from.address'))){
-            Log::info("mail gönderiliyor");
-            Mail::to(config('mail.from.address'))->send(new ContactMail($contact));
-
-        }
+        Contact::create($request->validated());
 
         return redirect()->back()->withSuccess("Contact request received successfully");
     }
