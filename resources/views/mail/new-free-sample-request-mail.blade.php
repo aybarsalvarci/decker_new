@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>New Contact Form Message</title>
+    <title>New Free Sample Request</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
 
@@ -69,7 +69,7 @@
 
     {{-- Email preview text --}}
     <div style="display: none; max-height: 0px; overflow: hidden; font-size: 1px; color: #f4f7f9;">
-        You have received a new contact form message from your website. Sender: {{ $contact->full_name ?? 'Unknown' }}
+        You have received a new free sample request from {{ $sample->full_name ?? 'a user' }}.
     </div>
 
     <table width="600" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 15px;">
@@ -87,11 +87,11 @@
             <td align="center" style="background-color: #1a252f; padding: 40px 20px;">
                 <a href="{{ url('/') }}" target="_blank" style="text-decoration: none;">
                     @if(isset($settings->logo) && file_exists(public_path('storage/' . $settings->logo)))
-                        <img src="{{ asset('storage/' . $settings->logo) }}"
-                             alt="DECK-ER"
-                             style="display: block; width: 180px; max-width: 100%; border: 0; outline: none; text-decoration: none;">
+                    <img src="{{ asset('storage/' . $settings->logo) }}"
+                         alt="DECK-ER"
+                         style="display: block; width: 180px; max-width: 100%; border: 0; outline: none; text-decoration: none;">
                     @else
-                        <span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px;">
+                    <span style="font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 800; color: #ffffff; letter-spacing: -1.5px;">
                             DECK-<span style="color: #e63946;">ER</span>
                         </span>
                     @endif
@@ -104,31 +104,76 @@
         <tr>
             <td class="mobile-padding" style="padding: 40px 45px; background-color: #ffffff;">
                 <h2 style="margin: 0 0 20px 0; color: #1a252f; font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px;">
-                    You Have a New Message!
+                    New Sample Request!
                 </h2>
 
                 <p style="color: #718096; font-size: 15px; line-height: 1.6; margin-bottom: 25px;">
-                    A new request has been submitted via the contact form on your website. You can find the details below:
+                    A new free sample request has been submitted. Please review the customer and sample details below:
                 </p>
 
-                {{-- Form Data Table --}}
-                <table class="info-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                {{-- User & Shipping Info Table --}}
+                <table class="info-table" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 20px;">
                     <tr>
-                        <td width="30%"><strong>Full Name:</strong></td>
-                        <td>{{ $contact->full_name ?? '-' }}</td>
+                        <td width="30%"><strong>Request ID:</strong></td>
+                        <td>#{{ $sample->id ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Full Name:</strong></td>
+                        <td>{{ $sample->full_name ?? '-' }}</td>
                     </tr>
                     <tr>
                         <td><strong>Email Address:</strong></td>
-                        <td><a href="mailto:{{ $contact->email ?? '' }}" style="color: #e63946; text-decoration: none;">{{ $contact->email ?? '-' }}</a></td>
+                        <td><a href="mailto:{{ $sample->email ?? '' }}" style="color: #e63946; text-decoration: none;">{{ $sample->email ?? '-' }}</a></td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="border-bottom: none; padding-bottom: 5px;"><strong>Message:</strong></td>
+                        <td><strong>Phone Number:</strong></td>
+                        <td>{{ $sample->phone ?? '-' }}</td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="border-bottom: none; padding-top: 0;">
-                            <div style="background-color: #f8fafc; padding: 15px; border-left: 4px solid #1a252f; border-radius: 4px; color: #4a5568; font-size: 14px; line-height: 1.6; white-space: pre-line;">
-                                {{ $contact->message ?? 'Message content not found.' }}
+                        <td><strong>Location:</strong></td>
+                        <td>{{ $sample->state ?? '-' }}, {{ $sample->town ?? '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-bottom: none; padding-bottom: 5px;"><strong>Full Address:</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="border-bottom: none; padding-top: 0; padding-bottom: 15px;">
+                            <div style="background-color: #f8fafc; padding: 12px; border-left: 4px solid #1a252f; border-radius: 4px; color: #4a5568; font-size: 14px; line-height: 1.6; white-space: pre-line;">
+                                {{ $sample->address ?? '-' }}
                             </div>
+                        </td>
+                    </tr>
+                </table>
+
+                {{-- Requested Box Details --}}
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 30px;">
+                    <tr>
+                        <td style="padding-top: 10px; border-top: 2px dashed #edf2f7; padding-bottom: 15px;">
+                            <strong style="font-size: 16px; color: #1a252f;">Requested Sample Box</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="15" style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;">
+                                <tr>
+                                    @if(isset($sample->box->image))
+                                    <td width="90" valign="top" style="padding-right: 0;">
+                                        <img src="{{ asset('storage/' . $sample->box->image) }}" alt="Box Image" style="display: block; width: 90px; height: auto; border-radius: 4px; border: 1px solid #cbd5e0;">
+                                    </td>
+                                    @endif
+                                    <td valign="top">
+                                        <h4 style="margin: 0 0 5px 0; color: #1a252f; font-size: 16px;">
+                                            {{ $sample->box->title_en ?? 'Unknown Box Title' }}
+                                        </h4>
+                                        <p style="margin: 0 0 10px 0; color: #718096; font-size: 13px; line-height: 1.5;">
+                                            {{ Str::limit(strip_tags($sample->box->description_en ?? ''), 120) }}
+                                        </p>
+                                        <span style="background-color: #1a252f; color: #ffffff; font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 700;">
+                                            BOX ID: #{{ $sample->box_id ?? '-' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
                 </table>
@@ -137,9 +182,9 @@
                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td align="center">
-                            <a href="mailto:{{ $contact->email ?? '' }}"
+                            <a href="mailto:{{ $sample->email ?? '' }}"
                                style="background-color: #e63946; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 6px; font-weight: 700; font-size: 15px; display: inline-block;">
-                                REPLY TO USER
+                                CONTACT CUSTOMER
                             </a>
                         </td>
                     </tr>
@@ -163,7 +208,7 @@
             <td class="mobile-padding" style="padding: 25px 45px; background-color: #ffffff; text-align: center;">
                 <p style="margin: 0; color: #a0aec0; font-size: 13px; line-height: 1.6;">
                     This email is an automatically generated system notification.<br>
-                    For your security, always verify incoming email addresses.
+                    Please arrange the shipment according to the provided address details.
                 </p>
             </td>
         </tr>

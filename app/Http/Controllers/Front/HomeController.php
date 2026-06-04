@@ -139,17 +139,11 @@ class HomeController extends Controller
 
     public function saveFreeSamples(FreeSamplesCreateRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->safe()->except(['town', 'box_id']);
+        $data['town'] = $data['town_select'] == "Other" ? $data["town_custom"] : $data["town_select"];
+        $data["box_id"] = $data["sample_box_id"];
 
-        $freeSample = FreeSample::create([
-            "full_name" => $data["full_name"],
-            "email" => $data["email"],
-            "phone" => $data["phone"],
-            "state" => $data["state"],
-            "town" => $data['town_select'] == "Other" ? $data["town_custom"] : $data["town_select"],
-            "address" => $data["address"],
-            "box_id" => $data["sample_box_id"],
-        ]);
+        FreeSample::create($data);
 
         return redirect()->back()->withSuccess("Free samples request received successfully");
     }
