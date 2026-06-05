@@ -60,7 +60,7 @@
 
 @section('content')
 
-    <section class="atlas-hero" style="background-image:url('{{asset(!is_null($category->hero_image) ? $category->hero_image : 'front/assets/images/get_inspired/35.jpg')}}')">
+    <section class="atlas-hero" style="background-image:url('{{asset(!is_null($category->hero_image) ? 'storage/' . $category->hero_image : 'front/assets/images/get_inspired/35.jpg')}}')">
         <div class="atlas-content">
             <h1 style="font-size: 3.5rem; font-weight: 800; margin: 10px 0; color: #fff;">{{strtoupper($category->heroTitle ?? $category->name)}}</h1>
             <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto; opacity: 0.9;">
