@@ -26,11 +26,19 @@ class CreateInfoRequest extends FormRequest
             'phone' => 'required|string|max:50',
             'location' => 'required|string|max:500',
             'working_hours' => 'required|string|max:255',
+
             'map' => ['required', 'string', function ($attribute, $value, $fail) {
                 if (!str_contains($value, '<iframe') || !str_contains($value, '</iframe>')) {
                     $fail('The ' . $attribute . ' must be a valid Google Maps iframe code.');
                 }
             }],
+
+            'hero_title_en' => 'nullable|string|max:200',
+            'hero_title_esp' => 'nullable|string|max:200',
+            'hero_subtitle_en' => 'nullable|string|max:200',
+            'hero_subtitle_esp' => 'nullable|string|max:200',
+            "hero_image" => "bail|nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:10240",
+
         ];
     }
 }

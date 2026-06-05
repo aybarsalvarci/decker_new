@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\CreateInfoRequest;
+use App\Http\Services\ImageService;
 use App\Models\Contact;
 use App\Models\ContactInfo;
 use Illuminate\Http\Request;
@@ -79,7 +80,12 @@ class ContactController extends Controller
     public function infoUpdate(CreateInfoRequest $request)
     {
         $info = ContactInfo::firstOrFail();
-        $info->update($request->all());
+
+        $data = $request->except('hero_image');
+
+        $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/products', format:'webp');
+
+        $info->update($data);
         return redirect()->route('admin.contact.infos')->with('success', 'Contact info updated successfully');
     }
 }
