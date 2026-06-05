@@ -8,6 +8,7 @@ use App\Http\Services\ImageService;
 use App\Models\Contact;
 use App\Models\ContactInfo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContactController extends Controller
 {
@@ -83,7 +84,14 @@ class ContactController extends Controller
 
         $data = $request->except('hero_image');
 
-        $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/products', format:'webp');
+
+        if ($request->hasFile('hero_image')) {
+            if(Storage::disk('public')->exists($info->hero_image)){
+                Storage::disk('public')->delete($info->hero_image);
+            }
+
+            $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/products', format: 'webp');
+        }
 
         $info->update($data);
         return redirect()->route('admin.contact.infos')->with('success', 'Contact info updated successfully');
