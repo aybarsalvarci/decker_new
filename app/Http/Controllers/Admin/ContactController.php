@@ -86,7 +86,7 @@ class ContactController extends Controller
 
 
         if ($request->hasFile('hero_image')) {
-            if(Storage::disk('public')->exists($info->hero_image)){
+            if(!is_null($info->hero_image) && Storage::disk('public')->exists($info->hero_image)){
                 Storage::disk('public')->delete($info->hero_image);
             }
 
