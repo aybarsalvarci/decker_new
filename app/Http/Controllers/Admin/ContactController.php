@@ -90,7 +90,7 @@ class ContactController extends Controller
                 Storage::disk('public')->delete($info->hero_image);
             }
 
-            $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/products', width: 1600, format: 'webp');
+            $data['hero_image'] = ImageService::upload($request->file('hero_image'), 'images/contact-info', width: 1600, format: 'webp');
         }
 
         $info->update($data);
