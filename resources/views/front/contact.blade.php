@@ -59,7 +59,7 @@
 @endpush
 
 @section('content')
-    <section class="contact-hero" style="background-image: url('{{!is_null($info->hero_image) ? 'storage/' . $info->hero_image : 'front/assets/images/get_inspired/2.jpg'}}');">
+    <section class="contact-hero" style="background-image: url('{{ !is_null($info->hero_image) ? asset('storage/' . $info->hero_image) : asset('front/assets/images/get_inspired/2.jpg') }}');">
         <div class="contact-hero-content">
             <h1>{{$info->hero_title}}</h1>
             <p>{{$info->hero_subtitle}}</p>
