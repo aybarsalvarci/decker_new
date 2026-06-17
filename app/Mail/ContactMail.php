@@ -29,7 +29,7 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: "[DECK-ER] New Communication Request: {$this->contact->name}",
+            subject: "[". config('app.name') ."] New Communication Request: {$this->contact->name}",
         );
     }
 
