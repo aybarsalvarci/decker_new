@@ -14,6 +14,8 @@ class ContactObserver
      */
     public function created(Contact $contact): void
     {
+        Log::info("İletişim mesajı kaydedildi");
+
         if (!is_null(config('mail.from.address')) && !is_null(config('settings.mail'))) {
             Log::info("Contact email sending");
             Mail::from(config('mail.from.address'))->to(config('settings.mail'))->send(new ContactMail($contact));

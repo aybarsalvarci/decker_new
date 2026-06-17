@@ -26,6 +26,7 @@ use App\Models\StaticPage;
 use App\Models\TechnicalCertificate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -157,7 +158,6 @@ class HomeController extends Controller
     public function saveContact(ContactCreateRequest $request)
     {
         Contact::create($request->validated());
-
         return redirect()->back()->withSuccess("Contact request received successfully");
     }
 
