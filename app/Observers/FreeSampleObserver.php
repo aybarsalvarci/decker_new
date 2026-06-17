@@ -4,7 +4,6 @@ namespace App\Observers;
 
 use App\Mail\NewFreeSampleRequestMail;
 use App\Models\FreeSample;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class FreeSampleObserver
@@ -14,9 +13,9 @@ class FreeSampleObserver
      */
     public function created(FreeSample $freeSample): void
     {
-        if(!is_null(config('mail.from.address'))){
+        if(!is_null(config('mail.from.address')) && !is_null(config('settings.mail'))){
             $freeSample->load('box');
-            Mail::to(config('mail.from.address'))->send(new NewFreeSampleRequestMail($freeSample));
+            Mail::to(config('settings.mail'))->send(new NewFreeSampleRequestMail($freeSample));
         }
     }
 

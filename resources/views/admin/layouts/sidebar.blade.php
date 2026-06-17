@@ -88,6 +88,32 @@
                     </a>
                 </li>
 
+
+                <li class="nav-item {{ request()->routeIs('admin.email-subscription.*') ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('admin.email-subscription.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-box-open"></i>
+                        <p>
+                            Free Samples
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.email-subscription.index') }}" class="nav-link {{ request()->routeIs('admin.email-subscription.index') ? 'active' : '' }}">
+                                <i class="fas fa-clipboard-list nav-icon"></i>
+                                <p>Sample Requests</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('admin.sent-mail.index') }}" class="nav-link {{ request()->routeIs('admin.sent-mail.*') ? 'active' : '' }}">
+                                <i class="fas fa-cubes nav-icon"></i>
+                                <p>Sent Newsletter</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-header">CONTENT MANAGEMENT</li>
 
                 <li class="nav-item">
