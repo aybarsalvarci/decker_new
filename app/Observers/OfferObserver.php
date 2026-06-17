@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Mail\NewOfferMail;
 use App\Models\Offer;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OfferObserver
@@ -15,7 +16,12 @@ class OfferObserver
      */
     public function created(Offer $offer): void
     {
+        Log::info("Offer created");
+
         if(!is_null(config('mail.from.address')) && !is_null(config('settings.email'))){
+
+            Log::info("Offer maild sending");
+
             $offer->load('items.product.mainImage');
             Mail::to(config('settings.email'))->send(new NewOfferMail($offer));
         }
