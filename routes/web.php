@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Front\HomeController;
@@ -26,6 +27,12 @@ use App\Http\Controllers\Admin\{AboutController,
     ProductColorController,
     OfferController,
     FreeSampleController};
+
+Route::get('test-mail', function () {
+   Artisan::call('schedule:run');
+   $output = Artisan::output();
+   return "<pre>$output</pre>";
+});
 
 /* ============================== ADMIN ROUTES ============================== */
 
