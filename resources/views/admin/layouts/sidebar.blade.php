@@ -101,7 +101,7 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.email-subscription.index') }}" class="nav-link {{ request()->routeIs('admin.email-subscription.index') ? 'active' : '' }}">
                                 <i class="fas fa-clipboard-list nav-icon"></i>
-                                <p>Newsletters</p>
+                                <p>Subscribers</p>
                             </a>
                         </li>
 
