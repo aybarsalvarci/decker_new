@@ -13,9 +13,9 @@ class FreeSampleObserver
      */
     public function created(FreeSample $freeSample): void
     {
-        if(!is_null(config('mail.from.address')) && !is_null(config('settings.mail'))){
+        if(!is_null(config('mail.from.address')) && !is_null(config('settings.email'))){
             $freeSample->load('box');
-            Mail::to(config('settings.mail'))->send(new NewFreeSampleRequestMail($freeSample));
+            Mail::to(config('settings.email'))->send(new NewFreeSampleRequestMail($freeSample));
         }
     }
 

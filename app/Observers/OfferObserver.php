@@ -15,9 +15,9 @@ class OfferObserver
      */
     public function created(Offer $offer): void
     {
-        if(!is_null(config('mail.from.address')) && !is_null(config('settings.mail'))){
+        if(!is_null(config('mail.from.address')) && !is_null(config('settings.email'))){
             $offer->load('items.product.mainImage');
-            Mail::to(config('settings.mail'))->send(new NewOfferMail($offer));
+            Mail::to(config('settings.email'))->send(new NewOfferMail($offer));
         }
     }
 
