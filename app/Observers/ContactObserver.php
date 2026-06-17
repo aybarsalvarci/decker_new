@@ -18,7 +18,7 @@ class ContactObserver
 
         if (!is_null(config('mail.from.address')) && !is_null(config('settings.email'))) {
             Log::info("Contact email sending");
-            Mail::from(config('mail.from.address'))->to(config('settings.email'))->send(new ContactMail($contact));
+            Mail::to(config('settings.email'))->send(new ContactMail($contact));
         }
     }
 
