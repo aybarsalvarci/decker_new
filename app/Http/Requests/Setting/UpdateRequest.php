@@ -26,7 +26,7 @@ class UpdateRequest extends FormRequest
             'site_title_esp'  => 'required|string|max:255',
             'header_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'footer_logo'            => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'favicon'         => 'nullable|image|mimes:jpeg,png,jpg,webp,ico|max:10240',
+            'favicon'         => 'nullable|mimes:jpeg,png,jpg,webp,ico|max:10240',
 
             'email'           => 'required|email:rfc,dns|max:255',
             'phone_number'    => 'required|string|max:50',

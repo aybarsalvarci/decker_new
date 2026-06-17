@@ -18,9 +18,9 @@
         @endif
     </title>
 
-    @if(config('settings.favicon'))
-        <link rel="icon" type="image/png" href="{{ asset("storage/" . config("settings.favicon")) }}">
-        <link rel="apple-touch-icon" href="{{ asset("storage/" . config("settings.favicon")) }}">
+    @if($favicon = config('settings.favicon'))
+        <link rel="icon" href="{{ asset('storage/' . $favicon) }}">
+        <link rel="apple-touch-icon" href="{{ asset('storage/' . $favicon) }}">
     @endif
 
     @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
