@@ -9,6 +9,7 @@ use App\Mail\NewslaterMail;
 use App\Models\EmailSubscription;
 use App\Models\SentMail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SentMailController extends Controller
@@ -34,6 +35,8 @@ class SentMailController extends Controller
     public function send(SendNewslaterRequest $request)
     {
         SentMail::create($request->validated());
+
+        Log::info("mail oluşturuldu");
 
         SendNewsletterJob::dispatch($request->validated());
         return redirect()->route('admin.sent-mail.index')->with('success', 'Newsletter queued to be sent.');

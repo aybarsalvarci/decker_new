@@ -36,6 +36,8 @@ class SendNewsletterJob implements ShouldQueue
         $fullContent = str_replace('src="/', 'src="' . config('app.url') . '/', $content);
         $this->data['message'] = $fullContent;
 
+        Log::info("newsletter mail dispatch started");
+
         EmailSubscription::chunk(100, function ($subs) {
             foreach ($subs as $sub) {
                 try {
