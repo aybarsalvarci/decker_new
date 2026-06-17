@@ -93,7 +93,7 @@
                     <a href="#" class="nav-link {{ request()->routeIs('admin.email-subscription.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-box-open"></i>
                         <p>
-                            Free Samples
+                            Email Newsletter
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -101,14 +101,14 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.email-subscription.index') }}" class="nav-link {{ request()->routeIs('admin.email-subscription.index') ? 'active' : '' }}">
                                 <i class="fas fa-clipboard-list nav-icon"></i>
-                                <p>Sample Requests</p>
+                                <p>Newsletters</p>
                             </a>
                         </li>
 
                         <li class="nav-item">
                             <a href="{{ route('admin.sent-mail.index') }}" class="nav-link {{ request()->routeIs('admin.sent-mail.*') ? 'active' : '' }}">
                                 <i class="fas fa-cubes nav-icon"></i>
-                                <p>Sent Newsletter</p>
+                                <p>Send Newsletter</p>
                             </a>
                         </li>
                     </ul>
