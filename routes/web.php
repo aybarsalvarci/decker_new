@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use App\Http\Controllers\Front\HomeController;
@@ -26,13 +25,9 @@ use App\Http\Controllers\Admin\{AboutController,
     ProductController,
     ProductColorController,
     OfferController,
-    FreeSampleController};
+    FreeSampleController
+};
 
-Route::get('test-mail', function () {
-   Artisan::call('schedule:run');
-   $output = Artisan::output();
-   return "<pre>$output</pre>";
-});
 
 /* ============================== ADMIN ROUTES ============================== */
 
@@ -51,12 +46,12 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
         Route::resource('/', FreeSampleController::class)
             ->parameters(['' => 'free_sample'])
             ->names([
-                'index'   => 'index',
-                'create'  => 'create',
-                'store'   => 'store',
-                'show'    => 'show',
-                'edit'    => 'edit',
-                'update'  => 'update',
+                'index' => 'index',
+                'create' => 'create',
+                'store' => 'store',
+                'show' => 'show',
+                'edit' => 'edit',
+                'update' => 'update',
                 'destroy' => 'destroy',
             ]);
     });
