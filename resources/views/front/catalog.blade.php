@@ -4,11 +4,9 @@
     <meta charset="UTF-8" />
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        content="width=device-width, initial-scale=1.0"
     />
     <title>{{$catalog->title}} | {{config("settings.title")}}</title>
-    
-    <link rel="canonical" content="{{url()->current()}}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,7 +19,9 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
+    <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}" />
     <link rel="stylesheet" href="{{asset('front/assets/css/catalog.css')}}" />
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script>
@@ -31,7 +31,12 @@
     <script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
 </head>
 <body>
-<main class="fullscreen-viewer">
+<main
+    class="fullscreen-viewer"
+    data-pdf-viewer
+    data-pdf-src="{{asset('storage/' . $catalog->file)}}"
+    data-render-scale="2"
+>
     <div class="top-bar-controls">
         <a href="{{route('home')}}" class="btn-exit">
             <i class="fas fa-arrow-left"></i>
@@ -55,7 +60,9 @@
     </div>
 
     <div class="book-stage">
-        <div id="book"></div>
+        <div class="book-zoom-shell" id="bookZoomShell">
+            <div id="book"></div>
+        </div>
     </div>
 
     <button id="btnPrev" class="nav-arrow left">
@@ -75,6 +82,6 @@
     </div>
 </main>
 
-<script src="{{asset('front/assets/js/catalog.js')}}"></script>
+<script src="{{asset('front/assets/js/pdf-flipbook.js')}}"></script>
 </body>
 </html>
