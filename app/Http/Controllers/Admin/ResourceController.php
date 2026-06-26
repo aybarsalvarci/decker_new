@@ -61,7 +61,7 @@ class ResourceController extends Controller
         $data = $request->safe()->except('file');
 
         if ($request->hasFile('file')) {
-            if (Storage::disk('public')->exists($page->file)) {
+            if (!is_null($page->file) && Storage::disk('public')->exists($page->file)) {
                 Storage::disk('public')->delete($page->file);
             }
 
