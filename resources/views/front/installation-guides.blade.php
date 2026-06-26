@@ -1,64 +1,87 @@
-@extends('front.layouts.master')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>{{$installationGuide->title}} | {{config("settings.title")}}</title>
 
-@section('title', __("installationGuides.title"))
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-@push('css')
-    <link rel="stylesheet" href="{{asset('front/assets/css/installationGuides.css')}}"/>
-@endpush
+    <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('front/assets/css/catalog.css')}}" />
 
-@section('content')
 
-    <section class="warranty-hero">
-        <div class="warranty-hero-content">
-            <span class="hero-badge">{{__("installationGuides.hero.badge")}}</span>
-            <h1>{{__("installationGuides.hero.title")}}</h1>
-        </div>
-    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+    </script>
+    <script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
+</head>
+<body>
+<main
+    class="fullscreen-viewer"
+    data-pdf-viewer
+    data-pdf-src="{{asset('storage/' . $installationGuide->file)}}"
+    data-render-scale="2"
+>
+    <div class="top-bar-controls">
+        <a href="{{route('home')}}" class="btn-exit">
+            <i class="fas fa-arrow-left"></i>
+            <span class="hide-mobile">{{__("catalog.back-home")}}</span>
+        </a>
 
-    <div class="policy-container">
+        <div class="title-area">{{$installationGuide->title}}</div>
 
-        <div class="section-header">
-            <h2 class="main-heading">{{__("installationGuides.section.title")}}</h2>
-            <p>
-                {{__("installationGuides.section.desc")}}
-            </p>
-        </div>
-
-        @php
-            $videoCount = $videos->count();
-            $layoutClass = 'layout-multi'; // Varsayılan (3 ve üzeri)
-
-            if($videoCount === 1) {
-                $layoutClass = 'layout-1';
-            } elseif($videoCount === 2) {
-                $layoutClass = 'layout-2';
-            }
-        @endphp
-
-        <div class="video-grid {{ $layoutClass }}">
-            @forelse($videos as $video)
-                <div class="video-card">
-                    <div class="video-wrapper">
-                        {!! $video->video !!}
-                    </div>
-                    <div class="video-info">
-                        <h3 class="video-title">
-                            {{ $video->title }}
-                        </h3>
-                    </div>
-                </div>
-            @empty
-                <div style="grid-column: 1 / -1; text-align: center; padding: 50px; background: #f9f9f9; border-radius: 8px;">
-                    <i class="fas fa-play-circle fa-3x mb-3" style="color: #ccc;"></i>
-                    <p class="text-muted">{{__("installationGuides.section.no-video")}}</p>
-                </div>
-            @endforelse
-        </div>
-
+        <a
+            href="{{asset('storage/' . $installationGuide->file)}}"
+            download
+            class="btn-download-icon"
+        >
+            <i class="fas fa-download"></i>
+        </a>
     </div>
 
-@endsection
+    <div id="loadingState">
+        <div class="spinner"></div>
+        <p>{{__("catalog.loading")}}</p>
+    </div>
 
-@push('js')
-    <script src="{{asset('front/assets/js/resources.js')}}"></script>
-@endpush
+    <div class="book-stage">
+        <div class="book-zoom-shell" id="bookZoomShell">
+            <div id="book"></div>
+        </div>
+    </div>
+
+    <button id="btnPrev" class="nav-arrow left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="btnNext" class="nav-arrow right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
+
+    <div class="bottom-bar-controls">
+        <div class="page-counter" id="pageCounter">{{__("catalog.loading")}}</div>
+
+        <div class="zoom-tools">
+            <button id="btnZoomOut"><i class="fas fa-minus"></i></button>
+            <button id="btnZoomIn"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+</main>
+
+<script src="{{asset('front/assets/js/pdf-flipbook.js')}}"></script>
+</body>
+</html>

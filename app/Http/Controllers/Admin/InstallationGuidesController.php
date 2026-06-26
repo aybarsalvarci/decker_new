@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Resources\InstallationGuides\CreateRequest;
 use App\Http\Requests\Resources\InstallationGuides\UpdateRequest;
-use App\Models\InstallationGuide;
-use Illuminate\Http\Request;
+use App\Http\Services\ImageService;
+use App\Models\StaticPage;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class InstallationGuidesController extends Controller
 {
@@ -15,62 +16,30 @@ class InstallationGuidesController extends Controller
      */
     public function index()
     {
-        $videos = InstallationGuide::all();
-        return view('admin.resources.installation_guides.index', compact('videos'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('admin.resources.installation_guides.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CreateRequest $request)
-    {
-        InstallationGuide::create($request->validated());
-        return redirect()->route('admin.resources.installation-guides.index')
-            ->with('success', 'Installation Guide created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        $video = InstallationGuide::findOrFail($id);
-        return view('admin.resources.installation_guides.edit', compact('video'));
+        $installationGuide = StaticPage::where('slug', 'installation-guide')->first();
+        return view('admin.resources.installation_guides', compact('installationGuide'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, string $id)
+    public function update(UpdateRequest $request)
     {
-        $video = InstallationGuide::findOrFail($id);
-        $video->update($request->validated());
-        return redirect()->route('admin.resources.installation-guides.index');
+        $installationGuide = StaticPage::where('slug', 'installation-guide')->firstOrFail();
+        $data = $request->safe()->except('file');
+
+        if ($request->hasFile('file')) {
+            if (Storage::disk('public')->exists($installationGuide->file)) {
+                Storage::disk('public')->delete($installationGuide->file);
+            }
+
+            $fileName = "catalog" . Str::uuid() . "." . $request->file->extension();
+            $data['file'] = $request->file->storeAs('documents', $fileName, 'public');
+        }
+
+        $installationGuide->update($data);
+
+        return redirect()->back()->withSuccess("Installation guide updated successfully");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        $video = InstallationGuide::findOrFail($id);
-        $video->delete();
-        return redirect()->route('admin.resources.installation-guides.index');
-    }
 }

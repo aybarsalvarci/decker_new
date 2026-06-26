@@ -187,8 +187,8 @@ class HomeController extends Controller
 
     public function installationGuides()
     {
-        $videos = InstallationGuide::all();
-        return view('front.installation-guides', compact('videos'));
+        $installationGuide = StaticPage::where('slug', 'installation-guide')->firstOrFail();
+        return view('front.installation-guides', compact('installationGuide'));
     }
 
     public function technicalCertificates()

@@ -99,7 +99,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function () {
         Route::get('care-and-maintenance', [ResourceController::class, 'careAndMaintenance'])->name('care-and-maintenance');
         Route::put('care-and-maintenance', [ResourceController::class, 'updateCareAndMaintenance']);
 
-        Route::resource('installation-guides', InstallationGuidesController::class);
+        Route::get('installation-guides', [InstallationGuidesController::class, 'index'])->name('installation-guides.index');
+        Route::put('installation-guides', [InstallationGuidesController::class, 'update'])->name('installation-guides.update');
+
         Route::resource('gallery', GalleryController::class)->except(['show', 'edit', 'update']);
         Route::resource('technical-certificates', TechnicalCertificateController::class);
     });
@@ -193,8 +195,7 @@ Route::group([
 
     /* ================= RESOURCES ================= */
 
-    // Burada nested setLocale grubu kaldırıldı
-    Route::prefix(LaravelLocalization::transRoute('routes.resources.main')) // sadece slug: 'recursos' veya 'resources'
+    Route::prefix(LaravelLocalization::transRoute('routes.resources.main'))
     ->name('resources.')
         ->group(function () {
 

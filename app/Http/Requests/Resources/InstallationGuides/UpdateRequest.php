@@ -24,7 +24,7 @@ class UpdateRequest extends FormRequest
         return [
             'title_en' => 'required|string|max:255',
             'title_esp' => 'required|string|max:255',
-            'video' => 'required|string'
+            'file' => 'required|file|max:10240',
         ];
     }
 }
