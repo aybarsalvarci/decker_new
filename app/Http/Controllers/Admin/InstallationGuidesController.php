@@ -35,7 +35,7 @@ class InstallationGuidesController extends Controller
         $installationGuide = StaticPage::where('slug', 'installation-guide')->firstOrFail();
         $data = $request->safe()->except('file');
 
-        if ($request->hasFile('file')) {
+        if ($request->hasFile('file') && !is_null($installationGuide->file)) {
             if (Storage::disk('public')->exists($installationGuide->file)) {
                 Storage::disk('public')->delete($installationGuide->file);
             }

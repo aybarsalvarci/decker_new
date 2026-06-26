@@ -7,12 +7,10 @@ use App\Http\Requests\Resource\UpdateCareAndMaintenanceRequest;
 use App\Http\Requests\Resources\UpdateCatalogRequest;
 use App\Http\Requests\Resources\UpdateWarrantiesRequest;
 use App\Http\Services\ImageService;
-use App\Models\InstallationGuide;
 use App\Models\StaticPage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use JetBrains\PhpStorm\NoReturn;
 
 class ResourceController extends Controller
 {
