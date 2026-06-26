@@ -23,10 +23,8 @@ class UpdateWarrantiesRequest extends FormRequest
     {
         return [
             'title_en'    => 'required|string|max:255',
-            'content_en'  => 'required|string',
-
             'title_esp'   => 'required|string|max:255',
-            'content_esp' => 'required|string',
+            'file' => 'nullable|file|max:20480'
         ];
     }
 
@@ -35,8 +33,7 @@ class UpdateWarrantiesRequest extends FormRequest
         return [
             'title_en'    => 'Page Title (English)',
             'title_esp'   => 'Page Title (Spanish)',
-            'content_en'  => 'Main Content (English)',
-            'content_esp' => 'Main Content (Spanish)',
+            'file'   => 'PDF File',
         ];
     }
 }

@@ -58,11 +58,23 @@ class ResourceController extends Controller
 
     public function updateWarranties(UpdateWarrantiesRequest $request)
     {
-        $page = StaticPage::firstOrCreate(['slug' => 'warranties']);
+        $page = StaticPage::where('slug', 'warranties')->firstOrFail();
 
-        $page->update($request->validated());
+        $data = $request->safe()->except('file');
 
-        return redirect()->back()->withSuccess("Warranties page updated successfully.");
+        if ($request->hasFile('file')) {
+            if (Storage::disk('public')->exists($page->file)) {
+                Storage::disk('public')->delete($page->file);
+            }
+
+            $fileName = "catalog" . Str::uuid() . "." . $request->file->extension();
+            $data['file'] = $request->file->storeAs('documents', $fileName, 'public');
+        }
+
+        $page->update($data);
+
+        return redirect()->back()->withSuccess("Warranties page updated successfully");
+
     }
 
     public function careAndMaintenance()

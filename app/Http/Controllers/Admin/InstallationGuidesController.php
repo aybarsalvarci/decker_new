@@ -16,7 +16,14 @@ class InstallationGuidesController extends Controller
      */
     public function index()
     {
-        $installationGuide = StaticPage::where('slug', 'installation-guide')->first();
+        $installationGuide = StaticPage::firstOrCreate(
+            ['slug' => 'installation-guide'],
+            [
+                'title_en' => 'Installation Guides',
+                'title_esp' => 'Guías de instalación',
+            ]
+        );
+
         return view('admin.resources.installation_guides', compact('installationGuide'));
     }
 

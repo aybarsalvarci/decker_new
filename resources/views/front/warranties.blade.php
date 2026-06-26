@@ -1,30 +1,87 @@
-@extends('front.layouts.master')
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    />
+    <title>{{$page->title}} | {{config("settings.title")}}</title>
 
-@section('title', __("warranties.title"))
-@push('css')
-    <link rel="stylesheet" href="{{asset('front/assets/css/warranties.css')}}"/>
-@endpush
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@300;400;600&display=swap"
+        rel="stylesheet"
+    />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-@section('content')
+    <link rel="stylesheet" href="{{asset('front/assets/css/style.css')}}" />
+    <link rel="stylesheet" href="{{asset('front/assets/css/catalog.css')}}" />
 
-<section class="warranty-hero">
-    <div class="warranty-hero-content">
-        <span class="hero-badge">{{__("warranties.hero.badge")}}</span>
-        <h1>{{__("warranties.hero.title")}}</h1>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js";
+    </script>
+    <script src="https://unpkg.com/page-flip/dist/js/page-flip.browser.js"></script>
+</head>
+<body>
+<main
+    class="fullscreen-viewer"
+    data-pdf-viewer
+    data-pdf-src="{{asset('storage/' . $page->file)}}"
+    data-render-scale="2"
+>
+    <div class="top-bar-controls">
+        <a href="{{route('home')}}" class="btn-exit">
+            <i class="fas fa-arrow-left"></i>
+            <span class="hide-mobile">{{__("catalog.back-home")}}</span>
+        </a>
+
+        <div class="title-area">{{$page->title}}</div>
+
+        <a
+            href="{{asset('storage/' . $page->file)}}"
+            download
+            class="btn-download-icon"
+        >
+            <i class="fas fa-download"></i>
+        </a>
     </div>
-</section>
 
-<div class="policy-container">
+    <div id="loadingState">
+        <div class="spinner"></div>
+        <p>{{__("catalog.loading")}}</p>
+    </div>
 
-    <h2 class="main-heading">{{$page->title}}</h2>
+    <div class="book-stage">
+        <div class="book-zoom-shell" id="bookZoomShell">
+            <div id="book"></div>
+        </div>
+    </div>
 
+    <button id="btnPrev" class="nav-arrow left">
+        <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="btnNext" class="nav-arrow right">
+        <i class="fas fa-chevron-right"></i>
+    </button>
 
-    {!! $page->content !!}
+    <div class="bottom-bar-controls">
+        <div class="page-counter" id="pageCounter">{{__("catalog.loading")}}</div>
 
-</div>
+        <div class="zoom-tools">
+            <button id="btnZoomOut"><i class="fas fa-minus"></i></button>
+            <button id="btnZoomIn"><i class="fas fa-plus"></i></button>
+        </div>
+    </div>
+</main>
 
-
-@endsection
-@push('js')
-    <script src="{{asset('front/assets/js/resources.js')}}"></script>
-@endpush
+<script src="{{asset('front/assets/js/pdf-flipbook.js')}}"></script>
+</body>
+</html>

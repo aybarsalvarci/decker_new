@@ -232,6 +232,5 @@ Route::group([
             )->name('get-inspired-page');
         });
 
-    /* ⚠️ HER ZAMAN EN SON */
     Route::get('/{slug}', [HomeController::class, 'category'])->name('category');
 });
